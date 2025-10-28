@@ -19,7 +19,7 @@ class User(
     val resetKeyCreatedAt: Instant? = null
 ) : BaseEntity() {
 
-    val username: String get() = "$firstName.$lastName";
+    val username: String = "$firstName.$lastName";
 
     final var password: String = ""
         private set
