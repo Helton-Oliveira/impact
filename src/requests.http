@@ -1,0 +1,28 @@
+### GET request to example server
+POST http://localhost:8080/api/users
+Content-Type: application/json
+
+{
+  "uuid": "8ca66331-ae12-42a5-b644-f3219dffa891",
+  "firstName": "Steve",
+  "lastName": "Rogers",
+  "password": "230ASD#:",
+  "cpf": "69351719030",
+  "email": "steve@avenger.com",
+  "phoneNumber": "123456789",
+  "birthday": "1918-06-4",
+  "role": "ADMIN"
+}
+
+###
+
+### GET request to example server
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "Steve.Rogers",
+  "password": "230ASD#:"
+}
+
+###

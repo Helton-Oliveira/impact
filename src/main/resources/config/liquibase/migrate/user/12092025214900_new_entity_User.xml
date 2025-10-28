@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+
+    <changeSet id="0f2a6b4f-7831-45b7-a10c-ebccc44b5701" author="heltonOliveira">
+        <createTable tableName="usr_users">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" unique="true" nullable="false"/>
+            </column>
+
+            <column name="uuid" type="text">
+                <constraints unique="true" nullable="false"/>
+            </column>
+
+            <column name="active" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_modified_at" type="timestamp"/>
+
+            <column name="last_modified_by" type="text"/>
+
+            <column name="deleted_at" type="timestamp"/>
+
+            <column name="created_by" type="text"/>
+
+            <column name="username" type="text">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="first_name" type="text">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_name" type="text">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="email" type="text">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="password" type="text">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="cpf" type="text">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="phone_number" type="text"/>
+
+            <column name="role" type="text">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="reset_key" type="text">
+                <constraints unique="true"/>
+            </column>
+
+            <column name="reset_key_created_at" type="timestamp"/>
+        </createTable>
+
+        <createIndex tableName="usr_users" indexName="idx_usr_users__id">
+            <column name="id" type="bigint"/>
+        </createIndex>
+
+        <createIndex tableName="usr_users" indexName="idx_usr_users__active">
+            <column name="active" type="boolean"/>
+        </createIndex>
+
+        <createIndex tableName="usr_users" indexName="idx_usr_users__username">
+            <column name="username" type="text"/>
+        </createIndex>
+
+        <createIndex tableName="usr_users" indexName="idx_usr_users__email">
+            <column name="email" type="text"/>
+        </createIndex>
+
+        <createIndex tableName="usr_users" indexName="idx_usr_users__role">
+            <column name="role" type="text"/>
+        </createIndex>
+
+    </changeSet>
+
+</databaseChangeLog>
