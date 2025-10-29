@@ -32,10 +32,6 @@
 
             <column name="created_by" type="text"/>
 
-            <column name="username" type="text">
-                <constraints nullable="false"/>
-            </column>
-
             <column name="first_name" type="text">
                 <constraints nullable="false"/>
             </column>
@@ -75,10 +71,6 @@
 
         <createIndex tableName="usr_users" indexName="idx_usr_users__active">
             <column name="active" type="boolean"/>
-        </createIndex>
-
-        <createIndex tableName="usr_users" indexName="idx_usr_users__username">
-            <column name="username" type="text"/>
         </createIndex>
 
         <createIndex tableName="usr_users" indexName="idx_usr_users__email">

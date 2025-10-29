@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service
 @Service
 class UserDetailsServiceImpl(private val userRepository: UserRepository) : UserDetailsService {
 
-    override fun loadUserByUsername(username: String): UserDetails {
-        return userRepository.findByUsername(username)
+    override fun loadUserByUsername(email: String): UserDetails {
+        return userRepository.findByUsername(email)
             ?.let { entity -> UserDetailsImpl(entity) }!!
     }
 }

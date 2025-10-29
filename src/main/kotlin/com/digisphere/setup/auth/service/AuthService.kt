@@ -21,7 +21,7 @@ class AuthService(
         return runCatching {
             val auth = manager.authenticate(
                 UsernamePasswordAuthenticationToken(
-                    credentials.username,
+                    credentials.email,
                     credentials.password
                 )
             )

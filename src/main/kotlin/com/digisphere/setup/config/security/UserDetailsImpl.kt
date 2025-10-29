@@ -11,5 +11,5 @@ class UserDetailsImpl(private val user: User?) : UserDetails {
 
     override fun getPassword(): String? = user?.password
 
-    override fun getUsername(): String? = user?.username
+    override fun getUsername(): String? = user?.email
 }
