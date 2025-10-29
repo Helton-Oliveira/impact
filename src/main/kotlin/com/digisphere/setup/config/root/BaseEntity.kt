@@ -15,8 +15,8 @@ class BaseEntity {
     private var createdAt: Instant = Instant.now();
     private var lastModifiedAt: Instant = Instant.now();
     private lateinit var deletedAt: Instant;
-    private lateinit var createdBy: String;
-    private lateinit var lastModifiedBy: String;
+    private var createdBy: String? = null;
+    private var lastModifiedBy: String? = null;
 
     @Transient
     private var _edited: Boolean = true;
@@ -29,12 +29,12 @@ class BaseEntity {
     fun audit(username: String) {
 
         this.createdBy
-            .takeIf { it.isBlank() }
-            ?.let { this.createdBy = it }
+            ?.takeIf { it.isBlank() }
+            ?.let { this.createdBy = username; }
 
         this.createdAt
             .takeIf { !it.isDeclared(it) }
-            ?.let { this.createdAt = it }
+            ?.let { this.createdAt = Instant.now() }
 
         this.lastModifiedBy = username;
         this.lastModifiedAt = Instant.now();
