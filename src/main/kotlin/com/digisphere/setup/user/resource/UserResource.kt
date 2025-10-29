@@ -31,7 +31,7 @@ class UserResource(
                     ResponseEntity.status(status).body(null)
                 },
                 onSuccess = { output ->
-                    ResponseEntity.created(uriBuilder.path("/api/users/${output.id}").build().toUri())
+                    ResponseEntity.created(uriBuilder.path("/api/users/${output?.id}").build().toUri())
                         .body(output)
                 }
             )

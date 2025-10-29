@@ -8,7 +8,6 @@ import com.digisphere.setup.user.dto.UserOutput
 
 fun User.toResponse(): UserOutput =
     UserOutput(
-        id = this.id,
         firstName = this.firstName,
         lastName = this.lastName,
         cpf = this.cpf,
@@ -16,7 +15,7 @@ fun User.toResponse(): UserOutput =
         phoneNumber = this.phoneNumber,
         active = this.active,
         role = this.role
-    )
+    ).apply { id = this.id }
 
 fun UserInput.toDomain(): User =
     User(
@@ -29,3 +28,18 @@ fun UserInput.toDomain(): User =
         resetKeyCreatedAt = this.resetKeyCreatedAt,
         role = this.role
     ).also { usr -> usr.takeIf { it.wasEdited() }?.audit(getAuthenticatedUsername()) }
+
+fun User.toInput(): UserInput {
+    return UserInput(
+        id = this.id,
+        firstName = this.firstName,
+        lastName = this.lastName,
+        password = this.password,
+        cpf = this.cpf,
+        email = this.email,
+        phoneNumber = this.phoneNumber,
+        resetKey = this.resetKey,
+        resetKeyCreatedAt = this.resetKeyCreatedAt,
+        role = this.role,
+    );
+}

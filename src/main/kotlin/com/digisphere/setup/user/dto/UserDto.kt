@@ -1,16 +1,20 @@
 package com.digisphere.setup.user.dto
 
 import com.digisphere.setup.auth.enums.Role
+import com.digisphere.setup.config.root.BaseInput
+import com.digisphere.setup.config.root.BaseOutput
+import com.digisphere.setup.file.dto.FileInput
+import com.digisphere.setup.file.dto.FileOutput
 import com.fasterxml.jackson.annotation.JsonView
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
 import org.hibernate.validator.constraints.Length
 import org.hibernate.validator.constraints.br.CPF
-import java.io.Serial
-import java.io.Serializable
 import java.time.Instant
 
 data class UserInput(
+
+    var id: Long? = null,
 
     @field:NotBlank
     @field:Length(min = 1, max = 255)
@@ -40,16 +44,17 @@ data class UserInput(
     var resetKey: String?,
     var resetKeyCreatedAt: Instant?,
 
-    @field:NotNull
-    var birthday: String,
+    //  @field:NotNull
+    //  var birthday: String,
 
     @field:NotNull
     var role: Role,
-) : Serializable
+
+    var files: MutableList<FileInput?>? = null,
+
+    ) : BaseInput()
 
 data class UserOutput(
-    @field:JsonView(Json.List::class)
-    val id: Long?,
 
     @field:JsonView(Json.List::class)
     val firstName: String,
@@ -72,15 +77,12 @@ data class UserOutput(
     @field:JsonView(Json.Detail::class)
     val role: Role,
 
-    ) : Serializable {
-
-    @Serial
-    private val serialVersionUID: Long = 1L;
+    ) : BaseOutput() {
 
     interface Json {
-        interface List
-        interface Detail : List
-        interface WithFile
-        interface All : Detail, WithFile
+        interface List;
+        interface Detail : List;
+        interface WithFile : FileOutput.Json.Detail;
+        interface All : Detail, WithFile;
     }
 }
