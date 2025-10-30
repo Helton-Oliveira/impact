@@ -14,8 +14,6 @@ import java.time.Instant
 
 data class UserInput(
 
-    var id: Long? = null,
-
     @field:NotBlank
     @field:Length(min = 1, max = 255)
     var firstName: String,
