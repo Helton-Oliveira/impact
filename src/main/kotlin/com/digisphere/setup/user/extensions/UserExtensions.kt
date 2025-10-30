@@ -6,7 +6,7 @@ import com.digisphere.setup.user.dto.UserInput
 import com.digisphere.setup.user.dto.UserOutput
 
 
-fun User.toResponse(): UserOutput =
+fun User.toOutput(): UserOutput =
     UserOutput(
         firstName = this.firstName,
         lastName = this.lastName,
@@ -15,7 +15,10 @@ fun User.toResponse(): UserOutput =
         phoneNumber = this.phoneNumber,
         active = this.active,
         role = this.role
-    ).apply { id = this.id }
+    ).also {
+        it.id = this.id;
+        it.uuid = this.uuid
+    }
 
 fun UserInput.toDomain(): User =
     User(
@@ -31,7 +34,6 @@ fun UserInput.toDomain(): User =
 
 fun User.toInput(): UserInput {
     return UserInput(
-        id = this.id,
         firstName = this.firstName,
         lastName = this.lastName,
         password = this.password,
@@ -41,5 +43,8 @@ fun User.toInput(): UserInput {
         resetKey = this.resetKey,
         resetKeyCreatedAt = this.resetKeyCreatedAt,
         role = this.role,
-    );
+    ).also {
+        it.id = this.id;
+        it.uuid = this.uuid
+    }
 }
