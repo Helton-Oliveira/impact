@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+
+    <changeSet id="41b5da72-ca33-4232-b5da-72ca33a2325e" author="heltonOliveira">
+        <createTable tableName="adm_files">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" unique="true" nullable="false"/>
+            </column>
+
+            <column name="uuid" type="text">
+                <constraints unique="true" nullable="false"/>
+            </column>
+
+            <column name="active" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_modified_at" type="timestamp"/>
+
+            <column name="last_modified_by" type="text"/>
+
+            <column name="deleted_at" type="timestamp"/>
+
+            <column name="created_by" type="text"/>
+
+            <column name="name" type="text"/>
+
+            <column name="path" type="text"/>
+
+            <column name="base64" type="text"/>
+
+            <column name="user_id" type="bigint"/>
+
+            <column name="type" type="text"/>
+
+        </createTable>
+
+        <createIndex tableName="adm_files" indexName="idx_adm_files__id">
+            <column name="id" type="bigint"/>
+        </createIndex>
+
+        <createIndex tableName="adm_files" indexName="idx_adm_files__uuid">
+            <column name="uuid" type="bigint"/>
+        </createIndex>
+
+        <createIndex tableName="adm_files" indexName="idx_adm_files__active">
+            <column name="active" type="boolean"/>
+        </createIndex>
+
+        <createIndex tableName="adm_files" indexName="idx_adm_files__name">
+            <column name="name" type="text"/>
+        </createIndex>
+
+        <createIndex tableName="adm_files" indexName="idx_adm_files__user_id">
+            <column name="user_id" type="bigint"/>
+        </createIndex>
+
+        <createIndex tableName="adm_files" indexName="idx_adm_files__type">
+            <column name="type" type="text"/>
+        </createIndex>
+
+    </changeSet>
+
+</databaseChangeLog>
