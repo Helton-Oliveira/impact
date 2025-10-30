@@ -7,6 +7,8 @@ import java.io.Serializable
 open class BaseInput(
     var _edited: Boolean = false,
     var active: Boolean = false,
+    var id: Long? = null,
+    var uuid: String? = null,
 )
 
 open class BaseOutput : Serializable {
@@ -16,6 +18,9 @@ open class BaseOutput : Serializable {
 
     @field:JsonView(Json.List::class)
     var id: Long? = null
+
+    @field:JsonView(Json.Detail::class)
+    var uuid: String? = null
 
     interface Json {
         interface List;

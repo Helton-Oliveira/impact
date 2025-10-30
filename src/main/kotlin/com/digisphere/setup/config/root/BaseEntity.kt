@@ -21,6 +21,11 @@ class BaseEntity {
     @Transient
     private var _edited: Boolean = true;
 
+    fun disabled(): Long? {
+        this.active = false
+        return this.id
+    }
+
 
     fun wasEdited(): Boolean {
         return _edited;
