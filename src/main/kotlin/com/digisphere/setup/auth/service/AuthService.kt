@@ -17,24 +17,22 @@ class AuthService(
 ) {
 
 
-    fun login(credentials: LoginRequest): Result<LoginResponse> {
-        return runCatching {
-            val auth = manager.authenticate(
-                UsernamePasswordAuthenticationToken(
-                    credentials.email,
-                    credentials.password
-                )
+    fun login(credentials: LoginRequest): Result<LoginResponse> = runCatching {
+        val auth = manager.authenticate(
+            UsernamePasswordAuthenticationToken(
+                credentials.email,
+                credentials.password
             )
+        )
 
-            SecurityContextHolder.getContext().authentication = auth;
+        SecurityContextHolder.getContext().authentication = auth;
 
-            val username = auth.name
-            val userDetails = userDetailsServiceImpl.loadUserByUsername(username)
+        val username = auth.name
+        val userDetails = userDetailsServiceImpl.loadUserByUsername(username)
 
-            val token = jwtTokenUtil.generateToken(userDetails.username, userDetails.authorities)
+        val token = jwtTokenUtil.generateToken(userDetails.username, userDetails.authorities)
 
-            LoginResponse(token!!)
-        }
+        LoginResponse(token!!)
     }
 
 }
