@@ -7,7 +7,9 @@ import com.digisphere.setup.file.extensions.toOutput
 import com.digisphere.setup.file.repository.FileRepository
 import com.digisphere.setup.user.dto.UserInput
 import jakarta.transaction.Transactional
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
+import kotlin.jvm.optionals.getOrNull
 
 @Service
 @Transactional
@@ -24,6 +26,25 @@ class FileService(private val fileRepository: FileRepository) {
         inputs?.filter { it?._edited ?: false }
             ?.map { it?.user = userInput; it }
             ?.forEach(::saveFile)
+    }
+
+    fun getOne(id: Long) = runCatching {
+        fileRepository.findById(id)
+            .getOrNull()
+            ?.toOutput()
+    }
+
+    fun getAll(pageable: Pageable) = runCatching {
+        fileRepository.findAll(pageable)
+            .map { file -> file.toOutput() }
+    }
+
+    fun deleteById(id: Long) = runCatching {
+        fileRepository.findById(id)
+            .getOrNull()
+            ?.also { it.disabled() }
+            ?.let { fileRepository.save(it) }
+            ?.toOutput()
     }
 
 }
