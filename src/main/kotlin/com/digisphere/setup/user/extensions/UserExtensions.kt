@@ -13,11 +13,11 @@ fun User.toOutput(): UserOutput =
         cpf = this.cpf,
         email = this.email,
         phoneNumber = this.phoneNumber,
-        active = this.active,
         role = this.role
     ).also {
         it.id = this.id;
-        it.uuid = this.uuid
+        it.uuid = this.uuid;
+        it.active = this.active;
     }
 
 fun UserInput.toDomain(): User =

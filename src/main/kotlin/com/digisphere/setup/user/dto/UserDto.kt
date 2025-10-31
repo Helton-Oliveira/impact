@@ -69,9 +69,6 @@ data class UserOutput(
     @field:JsonView(Json.Detail::class)
     val phoneNumber: String,
 
-    @field:JsonView(Json.List::class)
-    val active: Boolean,
-
     @field:JsonView(Json.Detail::class)
     val role: Role,
 
