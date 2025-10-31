@@ -22,6 +22,9 @@ open class BaseOutput : Serializable {
     @field:JsonView(Json.Detail::class)
     var uuid: String? = null
 
+    @field:JsonView(Json.Detail::class)
+    var active: Boolean? = null
+
     interface Json {
         interface List;
         interface Detail : List;
