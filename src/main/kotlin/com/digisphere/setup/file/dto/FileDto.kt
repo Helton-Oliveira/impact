@@ -21,7 +21,7 @@ data class FileInput(
 
     val base64: String? = null,
 
-    var user: UserInput? = null,
+    var user: UserInput?,
 ) : BaseInput()
 
 data class FileOutput(
