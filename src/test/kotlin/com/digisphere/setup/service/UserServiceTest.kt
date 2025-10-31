@@ -29,7 +29,6 @@ import java.util.*
 @Transactional
 class UserServiceTest() {
 
-    @Autowired
     private lateinit var userService: UserService
 
     @Autowired
@@ -140,16 +139,17 @@ class UserServiceTest() {
     @Test
     fun `deve desativar usuario`() {
         val savedUser = userService.create(userInput);
-        var result: Result<Long?>? = null
+        var result: Result<UserOutput?>? = null
         var savedUserId: Long? = null
 
         savedUser.onSuccess {
-            result = userService.disable(it?.id!!)
+            result = userService.disableById(it?.id!!)
             savedUserId = it.id
         }
 
         result?.onSuccess {
-            assertThat(it).isEqualTo(savedUserId);
+            assertThat(it?.id).isEqualTo(savedUserId);
+            assertThat(it?.active).isFalse();
         }
     }
 }

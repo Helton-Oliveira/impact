@@ -45,9 +45,11 @@ class UserService(
         userRepository.findAll(pageable).map { user -> user.toOutput() };
     }
 
-    fun disable(id: Long) = runCatching {
+    fun disableById(id: Long) = runCatching {
         userRepository.findById(id)
             .getOrNull()
-            ?.disabled()
+            ?.also { it.disabled() }
+            ?.let { userRepository.save(it) }
+            ?.toOutput()
     }
 }
