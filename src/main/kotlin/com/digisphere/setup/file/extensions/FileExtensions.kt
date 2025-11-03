@@ -4,21 +4,24 @@ import com.digisphere.setup.config.root.getAuthenticatedUsername
 import com.digisphere.setup.file.domain.File
 import com.digisphere.setup.file.dto.FileInput
 import com.digisphere.setup.file.dto.FileOutput
-import com.digisphere.setup.user.extensions.toDomain
+import com.digisphere.setup.user.domain.User
 
-fun FileInput.toDomain(): File {
-    return File(
-        name = this.name,
-        path = this.path,
-        base64 = this.base64,
-        type = this.type,
-    )
-        .also { it.user = this.user?.toDomain() }
-        .also { file -> file.takeIf { it.wasEdited() }?.audit(getAuthenticatedUsername()) }
-}
+fun FileInput.toDomain(): File =
+    this.let { input ->
+        File().apply {
+            name = input.name;
+            path = input.path;
+            base64 = input.base64;
+            type = input.type;
+            user = input.user?.id?.let { userInputId -> User().apply { id = userInputId } }
+        }.also { file ->
+            file.takeIf { it.wasEdited() }
+                ?.audit(getAuthenticatedUsername())
+        }
+    }
 
-fun File.toOutput(): FileOutput {
-    return FileOutput(
+fun File.toOutput(): FileOutput =
+    FileOutput(
         name = this.name,
         path = this.path,
         base64 = this.base64,
@@ -26,5 +29,5 @@ fun File.toOutput(): FileOutput {
     ).also {
         it.id = this.id;
         it.uuid = this.uuid;
+        it.active = this.active;
     }
-}

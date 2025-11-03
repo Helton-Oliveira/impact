@@ -42,9 +42,6 @@ data class UserInput(
     var resetKey: String?,
     var resetKeyCreatedAt: Instant?,
 
-    //  @field:NotNull
-    //  var birthday: String,
-
     @field:NotNull
     var role: Role,
 
@@ -71,6 +68,9 @@ data class UserOutput(
 
     @field:JsonView(Json.Detail::class)
     val role: Role,
+
+    @field:JsonView(Json.Detail::class)
+    val files: List<FileOutput>?,
 
     ) : BaseOutput() {
 
