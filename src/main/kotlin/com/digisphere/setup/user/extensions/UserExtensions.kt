@@ -1,7 +1,10 @@
 package com.digisphere.setup.user.extensions
 
 import com.digisphere.setup.config.root.getAuthenticatedUsername
+import com.digisphere.setup.config.root.mapIfRequested
+import com.digisphere.setup.file.extensions.toOutput
 import com.digisphere.setup.user.domain.User
+import com.digisphere.setup.user.domain.UserAssociations
 import com.digisphere.setup.user.dto.UserInput
 import com.digisphere.setup.user.dto.UserOutput
 
@@ -13,7 +16,8 @@ fun User.toOutput(): UserOutput =
         cpf = this.cpf,
         email = this.email,
         phoneNumber = this.phoneNumber,
-        role = this.role
+        role = this.role,
+        files = this.mapIfRequested("files") { this.files?.map { it.toOutput() } },
     ).also {
         it.id = this.id;
         it.uuid = this.uuid;
@@ -21,19 +25,23 @@ fun User.toOutput(): UserOutput =
     }
 
 fun UserInput.toDomain(): User =
-    User(
-        firstName = this.firstName,
-        lastName = this.lastName,
-        cpf = this.cpf,
-        email = this.email,
-        phoneNumber = this.phoneNumber,
-        resetKey = this.resetKey,
-        resetKeyCreatedAt = this.resetKeyCreatedAt,
-        role = this.role
-    ).also { usr -> usr.takeIf { it.wasEdited() }?.audit(getAuthenticatedUsername()) }
+    this.let { input ->
+        User().apply {
+            firstName = input.firstName
+            lastName = input.lastName
+            cpf = input.cpf
+            email = input.email
+            phoneNumber = input.phoneNumber
+            resetKey = input.resetKey
+            resetKeyCreatedAt = input.resetKeyCreatedAt
+            role = input.role
+        }.also { usr ->
+            usr.takeIf { it.wasEdited() }?.audit(getAuthenticatedUsername())
+        }
+    }
 
-fun User.toInput(): UserInput {
-    return UserInput(
+fun User.toInput(): UserInput =
+    UserInput(
         firstName = this.firstName,
         lastName = this.lastName,
         password = this.password,
@@ -47,4 +55,10 @@ fun User.toInput(): UserInput {
         it.id = this.id;
         it.uuid = this.uuid
     }
+
+fun User.applyFetches(associations: Set<UserAssociations>): User {
+    associations.forEach { fetchType ->
+        this._loadedAssociations.add(fetchType.propertyName);
+    }
+    return this;
 }

@@ -9,7 +9,7 @@ class BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null;
+    var id: Long? = null;
     val uuid: String = UUID.randomUUID().toString();
     var active: Boolean = true;
     private var createdAt: Instant = Instant.now();
@@ -21,10 +21,13 @@ class BaseEntity {
     @Transient
     private var _edited: Boolean = true;
 
+    @get:Transient
+    @Transient
+    var _loadedAssociations: MutableSet<String> = mutableSetOf()
+
     fun disabled() {
         this.active = false;
     }
-
 
     fun wasEdited(): Boolean {
         return _edited;
