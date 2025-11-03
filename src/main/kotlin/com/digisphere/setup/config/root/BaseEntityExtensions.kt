@@ -17,3 +17,10 @@ inline fun <E : BaseEntity, T> E.mapIfRequested(
         null
     }
 }
+
+fun BaseEntity.applyFetches(associations: Set<AssociationFetcher>): BaseEntity {
+    this._loadedAssociations.addAll(
+        associations.map { it.propertyName }
+    )
+    return this;
+}

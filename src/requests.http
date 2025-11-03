@@ -11,7 +11,19 @@ Content-Type: application/json
   "email": "steve@avenger.com",
   "phoneNumber": "123456789",
   "birthday": "1918-06-4",
-  "role": "ADMIN"
+  "role": "ADMIN",
+  "files": [
+    {
+      "uuid": "83fe6659-79b6-41b0-be66-5979b661b084",
+      "name": "Captain Avatar",
+      "path": "https://avatarfiles.alphacoders.com/167/167457.jpg",
+      "type": "JPEG",
+      "_edited": true,
+      "active": true
+    }
+  ],
+  "_edited": true,
+  "active": true
 }
 
 ###
@@ -21,8 +33,24 @@ POST http://localhost:8080/api/auth/login
 Content-Type: application/json
 
 {
-  "username": "Steve.Rogers",
+  "email": "steve@avenger.com",
   "password": "230ASD#:"
 }
+
+> {%
+    client.global.set("jwt", response.body.token)
+%}
+
+###
+
+### GET request to example server
+GET http://localhost:8080/api/users/32
+Authorization: Bearer {{jwt}}
+
+###
+
+### GET request to example server
+GET http://localhost:8080/api/users
+Authorization: Bearer {{jwt}}
 
 ###

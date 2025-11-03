@@ -1,10 +1,10 @@
 package com.digisphere.setup.user.service
 
+import com.digisphere.setup.config.root.applyFetches
 import com.digisphere.setup.file.service.FileService
 import com.digisphere.setup.user.domain.UserAssociations
 import com.digisphere.setup.user.dto.UserInput
 import com.digisphere.setup.user.dto.UserOutput
-import com.digisphere.setup.user.extensions.applyFetches
 import com.digisphere.setup.user.extensions.toDomain
 import com.digisphere.setup.user.extensions.toInput
 import com.digisphere.setup.user.extensions.toOutput

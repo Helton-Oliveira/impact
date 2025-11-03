@@ -132,7 +132,7 @@ class UserServiceTest() {
 
         result.onSuccess {
             assertThat(pageMocked.totalElements).isEqualTo(totalElements)
-            assertThat(it.content).isEqualTo(userOutputMOckList);
+            assertThat(it?.content).isEqualTo(userOutputMOckList);
         }
     }
 

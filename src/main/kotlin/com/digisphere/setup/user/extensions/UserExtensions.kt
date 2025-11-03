@@ -17,7 +17,7 @@ fun User.toOutput(): UserOutput =
         email = this.email,
         phoneNumber = this.phoneNumber,
         role = this.role,
-        files = this.mapIfRequested("files") { this.files?.map { it.toOutput() } },
+        files = this.mapIfRequested(UserAssociations.FILES.propertyName) { this.files?.map { it.toOutput() } },
     ).also {
         it.id = this.id;
         it.uuid = this.uuid;
@@ -55,10 +55,3 @@ fun User.toInput(): UserInput =
         it.id = this.id;
         it.uuid = this.uuid
     }
-
-fun User.applyFetches(associations: Set<UserAssociations>): User {
-    associations.forEach { fetchType ->
-        this._loadedAssociations.add(fetchType.propertyName);
-    }
-    return this;
-}
