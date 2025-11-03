@@ -1,5 +1,6 @@
 package com.digisphere.setup.config.root
 
+import com.digisphere.setup.config.root.extensions.isDeclared
 import jakarta.persistence.*
 import java.time.Instant
 import java.util.*

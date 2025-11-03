@@ -1,4 +1,4 @@
-package com.digisphere.setup.config.root
+package com.digisphere.setup.config.root.extensions
 
 import org.springframework.security.core.context.SecurityContextHolder
 

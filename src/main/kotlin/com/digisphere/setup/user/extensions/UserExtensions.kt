@@ -1,7 +1,7 @@
 package com.digisphere.setup.user.extensions
 
-import com.digisphere.setup.config.root.getAuthenticatedUsername
-import com.digisphere.setup.config.root.mapIfRequested
+import com.digisphere.setup.config.root.extensions.getAuthenticatedUsername
+import com.digisphere.setup.config.root.extensions.mapIfRequested
 import com.digisphere.setup.file.extensions.toOutput
 import com.digisphere.setup.user.domain.User
 import com.digisphere.setup.user.domain.UserAssociations

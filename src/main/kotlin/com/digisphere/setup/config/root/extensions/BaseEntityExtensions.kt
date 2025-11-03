@@ -1,4 +1,7 @@
-package com.digisphere.setup.config.root
+package com.digisphere.setup.config.root.extensions
+
+import com.digisphere.setup.config.root.AssociationFetcher
+import com.digisphere.setup.config.root.BaseEntity
 
 /**
  * @param E O tipo da Entidade que está sendo mapeada (Ex: User, que estende BaseEntity).

@@ -1,6 +1,6 @@
 package com.digisphere.setup.file.extensions
 
-import com.digisphere.setup.config.root.getAuthenticatedUsername
+import com.digisphere.setup.config.root.extensions.getAuthenticatedUsername
 import com.digisphere.setup.file.domain.File
 import com.digisphere.setup.file.dto.FileInput
 import com.digisphere.setup.file.dto.FileOutput

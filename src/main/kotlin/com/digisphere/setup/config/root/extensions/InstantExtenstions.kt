@@ -1,4 +1,4 @@
-package com.digisphere.setup.config.root
+package com.digisphere.setup.config.root.extensions
 
 import java.time.Instant
 

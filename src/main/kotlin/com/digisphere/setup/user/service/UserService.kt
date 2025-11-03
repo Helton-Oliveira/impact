@@ -1,6 +1,6 @@
 package com.digisphere.setup.user.service
 
-import com.digisphere.setup.config.root.applyFetches
+import com.digisphere.setup.config.root.extensions.applyFetches
 import com.digisphere.setup.file.service.FileService
 import com.digisphere.setup.user.domain.UserAssociations
 import com.digisphere.setup.user.dto.UserInput
