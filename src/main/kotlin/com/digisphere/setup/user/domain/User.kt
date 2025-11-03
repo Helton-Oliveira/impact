@@ -8,6 +8,8 @@ import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
 import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
+import org.apache.commons.text.CharacterPredicates
+import org.apache.commons.text.RandomStringGenerator
 import java.time.Instant
 
 @Entity
@@ -20,19 +22,36 @@ class User : BaseEntity() {
     lateinit var email: String;
     lateinit var phoneNumber: String;
     lateinit var role: Role;
-
-    var password: String = ""
-        set(value) {
-            val regex = Regex("""(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&+=]).+""")
-            value.takeIf { value.contains(regex) }
-                ?.let { field = it }
-        }
+    lateinit var password: String;
 
     var resetKey: String? = null;
     var resetKeyCreatedAt: Instant? = null;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @JsonIgnoreProperties(value = ["user"])
-    val files: MutableList<File>? = null
+    val files: MutableList<File>? = null;
+
+    fun generateResetKey() {
+        val generator = RandomStringGenerator
+            .Builder()
+            .withinRange('0'.code, 'z'.code)
+            .filteredBy(CharacterPredicates.LETTERS, CharacterPredicates.DIGITS)
+            .get();
+
+        this.resetKey = generator.generate(20).uppercase();
+        this.resetKeyCreatedAt = Instant.now();
+    }
+
+    fun isResetKeyValid(inputKey: String?): Boolean =
+        this.resetKey?.takeIf { it.isNotBlank() && this.resetKeyCreatedAt != null }
+            ?.let { this.resetKeyCreatedAt!!.plusSeconds(15000) }
+            ?.let { expiration ->
+                this.resetKey == inputKey && Instant.now().isBefore(expiration)
+            } ?: false
+
+    fun markResetKeyAsUsed() {
+        this.resetKey = null;
+        this.resetKeyCreatedAt = null;
+    }
 
 }

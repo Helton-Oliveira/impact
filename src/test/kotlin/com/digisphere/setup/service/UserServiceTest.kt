@@ -4,6 +4,7 @@ import com.digisphere.setup.auth.enums.Role
 import com.digisphere.setup.file.dto.FileInput
 import com.digisphere.setup.file.enum.FileType
 import com.digisphere.setup.file.service.FileService
+import com.digisphere.setup.mail.EmailService
 import com.digisphere.setup.user.domain.User
 import com.digisphere.setup.user.dto.UserInput
 import com.digisphere.setup.user.dto.UserOutput
@@ -23,6 +24,8 @@ import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.test.annotation.Commit
+import org.thymeleaf.TemplateEngine
 import java.util.*
 
 @SpringBootTest
@@ -33,6 +36,12 @@ class UserServiceTest() {
 
     @Autowired
     private lateinit var userRepository: UserRepository
+
+    @Autowired
+    private lateinit var emailService: EmailService
+
+    @Autowired
+    private lateinit var engine: TemplateEngine
 
     private val fileService: FileService = mockk()
     private val passwordEncoder: PasswordEncoder = mockk()
@@ -76,10 +85,12 @@ class UserServiceTest() {
         userService = UserService(
             userRepository = userRepository,
             fileService = fileService,
-            passwordEncoder = passwordEncoder
+            passwordEncoder = passwordEncoder,
+            emailService = emailService,
+            templateEngine = engine,
         )
 
-        every { passwordEncoder.encode(any()) } returns "password"
+        every { passwordEncoder.encode(any()) } returns "230ASD#:"
         every { fileService.saveAllAndFlush(any(), any()) } returns Result.success(Unit)
     }
 
@@ -151,5 +162,70 @@ class UserServiceTest() {
             assertThat(it?.id).isEqualTo(savedUserId);
             assertThat(it?.active).isFalse();
         }
+    }
+
+    @Test
+    @Commit
+    fun `deve enviar email de reset de senha e criar a resetKey`() {
+        val newUser = UserInput(
+            firstName = "Steve",
+            lastName = "Rogers",
+            password = "230ASD#:",
+            phoneNumber = "123456789",
+            cpf = "34165050008",
+            role = Role.ADMIN,
+            email = "steve@avenger.com",
+            resetKey = null,
+            resetKeyCreatedAt = null,
+            files = null,
+        ).apply {
+            id = 32L
+            uuid = "287dc62e-7bfe-4e63-a827-95f5f97b9ca4"
+            active = true
+            _edited = true
+        }
+        val isRested = userService.requestPasswordReset(newUser);
+
+        isRested.onSuccess {
+            assertThat(it).isTrue();
+        }
+
+        isRested.onFailure { exception ->
+            exception.printStackTrace();
+        }
+    }
+
+    @Test
+    @Commit
+    fun `deve resetar a senha do usuario caso resetKey for valida`() {
+        val getUser = userService.getOne(32L);
+        var userInput: UserInput? = null
+
+        getUser.onSuccess {
+            userInput = UserInput(
+                firstName = it?.firstName!!,
+                lastName = it.lastName,
+                password = "230ASD#:",
+                cpf = it.cpf,
+                email = it.email,
+                phoneNumber = it.phoneNumber,
+                role = it.role,
+                resetKey = it.resetKey,
+                resetKeyCreatedAt = it.resetKeyCreatedAt,
+                files = null,
+            ).apply {
+                id = 32L
+                uuid = "287dc62e-7bfe-4e63-a827-95f5f97b9ca4"
+                active = true
+                _edited = true
+            }
+        }
+
+        val result = userService.confirmPasswordReset(userInput!!);
+
+        result.onSuccess {
+            assertThat(it).isTrue();
+        }
+
     }
 }

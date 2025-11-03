@@ -18,6 +18,8 @@ fun User.toOutput(): UserOutput =
         phoneNumber = this.phoneNumber,
         role = this.role,
         files = this.mapIfRequested(UserAssociations.FILES.propertyName) { this.files?.map { it.toOutput() } },
+        resetKey = this.resetKey,
+        resetKeyCreatedAt = this.resetKeyCreatedAt
     ).also {
         it.id = this.id;
         it.uuid = this.uuid;
@@ -27,6 +29,9 @@ fun User.toOutput(): UserOutput =
 fun UserInput.toDomain(): User =
     this.let { input ->
         User().apply {
+            id = input.id
+            uuid = input.uuid!!
+            password = input.password
             firstName = input.firstName
             lastName = input.lastName
             cpf = input.cpf

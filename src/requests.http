@@ -44,7 +44,7 @@ Content-Type: application/json
 ###
 
 ### GET request to example server
-GET http://localhost:8080/api/users/32
+GET http://localhost:8080/api/users/36
 Authorization: Bearer {{jwt}}
 
 ###
@@ -52,5 +52,51 @@ Authorization: Bearer {{jwt}}
 ### GET request to example server
 GET http://localhost:8080/api/users
 Authorization: Bearer {{jwt}}
+
+###
+
+### GET request to example server
+POST http://localhost:8080/api/users/request-reset-password
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "id": 36,
+  "uuid": "8ca66331-ae12-42a5-b644-f3219dffa891",
+  "firstName": "Steve",
+  "lastName": "Rogers",
+  "password": "230ASD#:",
+  "cpf": "69351719030",
+  "email": "steve@avenger.com",
+  "phoneNumber": "123456789",
+  "role": "ADMIN",
+  "files": [],
+  "_edited": true,
+  "active": true
+}
+
+###
+
+### GET request to example server
+POST http://localhost:8080/api/users/reset-password
+Authorization: Bearer {{jwt}}
+Content-Type: application/json
+
+{
+  "id": 36,
+  "uuid": "8ca66331-ae12-42a5-b644-f3219dffa891",
+  "firstName": "Steve",
+  "lastName": "Rogers",
+  "password": "dsweERT5$:",
+  "cpf": "69351719030",
+  "email": "steve@avenger.com",
+  "phoneNumber": "123456789",
+  "role": "ADMIN",
+  "files": [],
+  "_edited": true,
+  "active": true,
+  "resetKey": "DJMLSPH3AM1JEJ4UI0HY",
+  "resetKeyCreatedAt": "2025-11-03T22:16:43.269496Z"
+}
 
 ###

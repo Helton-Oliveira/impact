@@ -11,7 +11,7 @@ class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null;
-    val uuid: String = UUID.randomUUID().toString();
+    var uuid: String = UUID.randomUUID().toString();
     var active: Boolean = true;
     private var createdAt: Instant = Instant.now();
     private var lastModifiedAt: Instant = Instant.now();

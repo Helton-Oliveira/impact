@@ -91,4 +91,36 @@ class UserResource(
                 onSuccess = { ResponseEntity.ok(it) }
             )
 
+    @PostMapping("/request-reset-password")
+    fun requestResetPassword(@RequestBody @Valid input: UserInput): ResponseEntity<Boolean> =
+        userService.requestPasswordReset(input)
+            .fold(
+                onFailure = { err ->
+                    val status = when (err) {
+                        is HttpClientErrorException.Unauthorized -> HttpStatus.UNAUTHORIZED
+                        is IllegalArgumentException -> HttpStatus.CONFLICT
+                        else -> HttpStatus.INTERNAL_SERVER_ERROR
+                    }
+
+                    ResponseEntity.status(status).body(null)
+                },
+                onSuccess = { ResponseEntity.ok(it) }
+            )
+
+    @PostMapping("/reset-password")
+    fun confirmPasswordReset(@RequestBody @Valid input: UserInput): ResponseEntity<Boolean> =
+        userService.confirmPasswordReset(input)
+            .fold(
+                onFailure = { err ->
+                    val status = when (err) {
+                        is HttpClientErrorException.Unauthorized -> HttpStatus.UNAUTHORIZED
+                        is IllegalArgumentException -> HttpStatus.CONFLICT
+                        else -> HttpStatus.INTERNAL_SERVER_ERROR
+                    }
+
+                    ResponseEntity.status(status).body(null)
+                },
+                onSuccess = { ResponseEntity.ok(it) }
+            )
+
 }

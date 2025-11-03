@@ -72,6 +72,12 @@ data class UserOutput(
     @field:JsonView(Json.Detail::class)
     val files: List<FileOutput>?,
 
+    @field:JsonView(Json.Detail::class)
+    val resetKey: String?,
+
+    @field:JsonView(Json.Detail::class)
+    val resetKeyCreatedAt: Instant?,
+
     ) : BaseOutput() {
 
     interface Json {
