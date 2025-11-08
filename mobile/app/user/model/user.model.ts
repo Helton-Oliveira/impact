@@ -1,5 +1,5 @@
 import {BaseEntity} from "@/app/root/BaseEntity";
-import {Role} from "@/app/root/Role";
+import {Role} from "react-native";
 
 export default class User extends BaseEntity {
     public firstName?: string;
