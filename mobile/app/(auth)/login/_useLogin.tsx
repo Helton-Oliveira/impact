@@ -1,6 +1,7 @@
 import {useState} from "react";
 import {LoginRequest} from "@/src/auth/dto/login.dto";
 import LoginService from "@/src/auth/auth.service";
+import {router} from "expo-router";
 
 export default function _useLogin() {
     const service = new LoginService();
@@ -16,9 +17,13 @@ export default function _useLogin() {
 
         const token = await service.login(login);
 
-        console.log(token);
+        console.warn(token);
     }
 
-    return {setEmail, email, password, setPassword, login}
+    function goToCreateAccount(): void {
+        router.push("/createAccount")
+    }
+
+    return {setEmail, email, password, setPassword, login, goToCreateAccount}
 
 }
