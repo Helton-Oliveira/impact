@@ -1,5 +1,6 @@
-import LoginPage from "@/app/auth/pages/login.update.page";
+import {View} from "react-native";
 
 export default function Index() {
-    return <LoginPage/>;
+    return <View/>;
 }
+
