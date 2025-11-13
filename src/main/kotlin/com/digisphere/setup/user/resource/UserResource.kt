@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.client.HttpClientErrorException
 import org.springframework.web.util.UriComponentsBuilder
 
+@CrossOrigin(origins = ["*"])
 @RestController
 @RequestMapping("/api/users")
 class UserResource(
@@ -28,6 +29,7 @@ class UserResource(
         userService.create(input)
             .fold(
                 onFailure = { error ->
+                    error.printStackTrace()
                     val status = when (error) {
                         is ConstraintViolationException -> HttpStatus.CONFLICT
                         else -> HttpStatus.INTERNAL_SERVER_ERROR
