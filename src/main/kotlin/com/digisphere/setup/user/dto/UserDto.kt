@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonView
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
 import org.hibernate.validator.constraints.Length
-import org.hibernate.validator.constraints.br.CPF
 import java.time.Instant
 
 data class UserInput(
@@ -23,7 +22,6 @@ data class UserInput(
     var lastName: String,
 
     @field:NotBlank
-    @field:CPF
     @field:Length(max = 11)
     var cpf: String,
 

@@ -15,7 +15,7 @@ data class FileInput(
     val name: String,
 
     @field:NotNull
-    var type: FileType,
+    var type: FileType = FileType.NOT_INFORMED,
 
     val path: String? = null,
 
