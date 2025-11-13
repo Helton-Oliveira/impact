@@ -10,6 +10,7 @@ export default function LoginPage() {
         setPassword,
         password,
         login,
+        goToCreateAccount
     } = _useLogin();
 
     return (
@@ -55,6 +56,7 @@ export default function LoginPage() {
                 <TouchableOpacity
                     style={_styles.createAccountBtn}
                     onPress={() => {
+                        goToCreateAccount()
                     }}
                 >
                     <Text style={_styles.textCreateAccountBtn}>Criar conta</Text>
