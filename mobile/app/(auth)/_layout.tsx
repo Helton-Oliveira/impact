@@ -28,6 +28,10 @@ export default function AuthLayout() {
                               headerTitle: "Criar Conta",
                           }}
             />
+            <Stack.Screen name="resetPasswordRequest/index"
+                          options={{
+                              headerTitle: "Resetar Senha"
+                          }}/>
         </Stack>
     );
 }

@@ -42,11 +42,16 @@ export default function _useUserQuery() {
         }
     });
 
+    const resetPasswordRequest = useMutation({
+        mutationFn: (email: string) => service.resetPasswordRequest(email),
+    });
+
     return {
         userFindAll,
         userFindById,
         createUser,
         updateUser,
-        deleteUser
+        deleteUser,
+        resetPasswordRequest
     };
 }
