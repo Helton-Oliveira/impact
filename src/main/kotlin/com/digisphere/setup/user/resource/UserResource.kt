@@ -1,6 +1,7 @@
 package com.digisphere.setup.user.resource
 
 import com.digisphere.setup.user.domain.UserAssociations
+import com.digisphere.setup.user.dto.EmailRequest
 import com.digisphere.setup.user.dto.UserInput
 import com.digisphere.setup.user.dto.UserOutput
 import com.digisphere.setup.user.service.UserService
@@ -94,10 +95,11 @@ class UserResource(
             )
 
     @PostMapping("/request-reset-password")
-    fun requestResetPassword(@RequestBody @Valid input: UserInput): ResponseEntity<Boolean> =
-        userService.requestPasswordReset(input)
+    fun requestResetPassword(@RequestBody email: EmailRequest): ResponseEntity<Boolean> =
+        userService.requestPasswordReset(email)
             .fold(
                 onFailure = { err ->
+                    err.printStackTrace();
                     val status = when (err) {
                         is HttpClientErrorException.Unauthorized -> HttpStatus.UNAUTHORIZED
                         is IllegalArgumentException -> HttpStatus.CONFLICT

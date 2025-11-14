@@ -85,3 +85,8 @@ data class UserOutput(
         interface All : Detail, WithFile;
     }
 }
+
+data class EmailRequest(
+    @field:NotBlank
+    val email: String
+);

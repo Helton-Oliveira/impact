@@ -4,6 +4,7 @@ import com.digisphere.setup.config.root.extensions.applyFetches
 import com.digisphere.setup.file.service.FileService
 import com.digisphere.setup.mail.EmailService
 import com.digisphere.setup.user.domain.UserAssociations
+import com.digisphere.setup.user.dto.EmailRequest
 import com.digisphere.setup.user.dto.UserInput
 import com.digisphere.setup.user.dto.UserOutput
 import com.digisphere.setup.user.extensions.toDomain
@@ -68,21 +69,20 @@ class UserService(
                 ?.toOutput()
         }
 
-    @Transactional
-    fun requestPasswordReset(userInput: UserInput): Result<Boolean> =
+    fun requestPasswordReset(email: EmailRequest): Result<Boolean> =
         runCatching {
-            val context = Context().apply {
-                setVariable("user", userInput);
-                setVariable("resetLink", "routerLink");
-            }
-
-            userRepository.findById(userInput.id!!).orElse(null)
+            val user = userRepository.findByUsername(email.email)
                 ?.also { it.generateResetKey() }
                 ?.let(userRepository::save)
 
+            val context = Context().apply {
+                setVariable("user", user);
+                setVariable("resetLink", "routerLink");
+            }
+
             emailService.sendEmail(
                 from = "from",
-                to = userInput.email,
+                to = user?.email!!,
                 subject = "Recuperação de Senha",
                 templateEngine.process("password-reset", context)
             )
