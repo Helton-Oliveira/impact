@@ -38,6 +38,10 @@ export default function _useLogin() {
         return executeLogin.isPending || !canSubmit();
     }
 
-    return {...form, login, goToCreateAccount, isPending: executeLogin.isPending, isDisable}
+    function goToResetPasswordRequest() {
+        router.push("/resetPasswordRequest");
+    }
+
+    return {...form, login, goToCreateAccount, isPending: executeLogin.isPending, isDisable, goToResetPasswordRequest}
 
 }

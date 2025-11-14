@@ -10,7 +10,8 @@ export default function LoginPage() {
         login,
         goToCreateAccount,
         isPending,
-        isDisable
+        isDisable,
+        goToResetPasswordRequest
     } = _useLogin();
 
     return (
@@ -46,7 +47,7 @@ export default function LoginPage() {
                         }
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={_styles.forgotPassSection}>
+                    <TouchableOpacity style={_styles.forgotPassSection} onPress={goToResetPasswordRequest}>
                         <Text style={_styles.forgotPassBtn}>Esqueceu a Senha?</Text>
                     </TouchableOpacity>
                 </View>
