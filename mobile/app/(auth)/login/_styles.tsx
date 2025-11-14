@@ -5,9 +5,9 @@ const _styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#12211F",
         alignItems: "center",
+        justifyContent: "center",
     },
     container1: {
-        flex: 1,
         alignItems: "center",
         justifyContent: "center",
     },

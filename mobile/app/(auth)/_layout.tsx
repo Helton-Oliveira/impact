@@ -15,13 +15,17 @@ export default function AuthLayout() {
                     color: "#FFF",
                     fontSize: 25
                 },
-                headerBackTitle: ""
+                headerBackTitle: "",
+                animation: "slide_from_right",
+                contentStyle: {
+                    backgroundColor: "#12211F",
+                },
             }}
         >
             <Stack.Screen name="login/index" options={{headerShown: false}}/>
             <Stack.Screen name="createAccount/index"
                           options={{
-                              headerTitle: "Login",
+                              headerTitle: "Criar Conta",
                           }}
             />
         </Stack>
