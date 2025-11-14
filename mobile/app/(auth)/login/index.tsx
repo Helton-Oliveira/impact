@@ -1,16 +1,16 @@
-import {Text, TextInput, TouchableOpacity, View} from "react-native";
+import {ActivityIndicator, Text, TextInput, TouchableOpacity, View} from "react-native";
 import _useLogin from "./_useLogin";
 import _styles from "./_styles";
 import {SafeAreaView} from "react-native-safe-area-context";
 
 export default function LoginPage() {
     const {
-        setEmail,
         email,
-        setPassword,
         password,
         login,
-        goToCreateAccount
+        goToCreateAccount,
+        isPending,
+        isDisable
     } = _useLogin();
 
     return (
@@ -22,43 +22,38 @@ export default function LoginPage() {
                     <Text style={_styles.welcomeText}>Bem-Vindo de volta!</Text>
 
                     <TextInput
-                        placeholder="Email..."
-                        value={email}
-                        onChangeText={(email) => {
-                            setEmail(email)
-                        }}
+                        placeholder="Email..." value={email.value} onChangeText={email.setValue}
                         placeholderTextColor="#91C9BF"
-                        style={_styles.textInput}>
+                        style={[!email.isTouched || email.isValid
+                            ? _styles.textInput
+                            : _styles.errorTextInput
+                        ]} onBlur={email.validate}>
                     </TextInput>
 
                     <TextInput
-                        placeholder="Senha..."
-                        value={password}
-                        onChangeText={(password) => {
-                            setPassword(password)
-                        }}
-                        placeholderTextColor="#91C9BF"
-                        style={_styles.textInput}>
+                        placeholder="Senha..." value={password.value} onChangeText={password.setValue}
+                        placeholderTextColor="#91C9BF" style={_styles.textInput} onBlur={password.validate}>
                     </TextInput>
 
-                    <TouchableOpacity
-                        onPress={() => login()}
-                        style={_styles.loginBtn}
-                    >
-                        <Text style={_styles.textBtnLogin}>Login</Text>
+                    <TouchableOpacity onPress={() => login()}
+                                      style={[_styles.loginBtn, isDisable() && _styles.loginBtnDisabled]}
+                                      disabled={isDisable()}>
+                        {
+                            isPending
+                                ? <ActivityIndicator style={{alignItems: "center", justifyContent: "center"}}/>
+                                : <Text
+                                    style={[_styles.textBtnLogin, isDisable() && _styles.loginTextDisabled]}>Login</Text>
+                        }
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity style={_styles.forgotPassSection}>
                         <Text style={_styles.forgotPassBtn}>Esqueceu a Senha?</Text>
                     </TouchableOpacity>
                 </View>
 
-                <TouchableOpacity
-                    style={_styles.createAccountBtn}
-                    onPress={() => {
-                        goToCreateAccount()
-                    }}
-                >
+                <TouchableOpacity style={_styles.createAccountBtn} onPress={() => {
+                    goToCreateAccount()
+                }}>
                     <Text style={_styles.textCreateAccountBtn}>Criar conta</Text>
                 </TouchableOpacity>
             </View>

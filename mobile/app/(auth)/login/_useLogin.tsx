@@ -1,29 +1,43 @@
-import {useState} from "react";
 import {LoginRequest} from "@/src/auth/dto/login.dto";
-import LoginService from "@/src/auth/auth.service";
 import {router} from "expo-router";
+import _useLoginQuery from "@/app/(auth)/login/_login.query";
+import useFormBuilder from "@/app/components/formBuilderComponent";
 
 export default function _useLogin() {
-    const service = new LoginService();
+    const {executeLogin} = _useLoginQuery();
 
-    const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
+    const {form} = useFormBuilder({
+        email: {initial: "", validate: (v) => (!v || v.length === 0 || !v.includes("@") ? "Nome é obrigatório" : null)},
+        password: {
+            initial: "",
+            validate: (v) => (!v || v.length === 0 || v.length < 6 ? "Sobrenome obrigatório" : null)
+        },
+    });
 
     async function login() {
         const login = {
-            email: email,
-            password: password
+            email: form.email.value,
+            password: form.password.value
         } as LoginRequest
 
-        const token = await service.login(login);
-
-        console.warn(token);
+        await executeLogin.mutateAsync(login);
     }
 
     function goToCreateAccount(): void {
         router.push("/createAccount")
     }
 
-    return {setEmail, email, password, setPassword, login, goToCreateAccount}
+    function canSubmit(): boolean {
+        const formIsValid = Object.values(form).every(f => f.isValid);
+        const isAnyFieldTouched = Object.values(form).some(f => f.isTouched);
+
+        return formIsValid && isAnyFieldTouched;
+    }
+
+    function isDisable(): boolean {
+        return executeLogin.isPending || !canSubmit();
+    }
+
+    return {...form, login, goToCreateAccount, isPending: executeLogin.isPending, isDisable}
 
 }
