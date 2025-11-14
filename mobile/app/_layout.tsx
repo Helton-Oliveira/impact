@@ -1,6 +1,6 @@
 import {Stack} from "expo-router";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
-import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
+import ReactQueryDebugPanel from "@/app/components/reactQueryDeubgPainel";
 
 const queryClient = new QueryClient();
 
@@ -11,9 +11,7 @@ export default function RootLayout() {
                 <Stack.Screen name="(auth)" options={{headerShown: false}}/>
             </Stack>
 
-            {__DEV__ && (
-                <ReactQueryDevtools initialIsOpen={false}/>
-            )}
+            {__DEV__ && <ReactQueryDebugPanel/>}
         </QueryClientProvider>
     );
 }
