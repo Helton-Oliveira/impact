@@ -33,6 +33,7 @@ const _styles = StyleSheet.create({
         height: 55,
         borderRadius: 10,
         backgroundColor: "#244742",
+        color: "#FFFFFF"
     },
     loginBtn: {
         alignItems: "center",
@@ -49,6 +50,8 @@ const _styles = StyleSheet.create({
     forgotPassBtn: {
         color: "#91C9BF",
         fontSize: 15,
+    },
+    forgotPassSection: {
         marginBottom: 260
     },
     createAccountBtn: {
@@ -63,7 +66,23 @@ const _styles = StyleSheet.create({
         fontWeight: "bold",
         color: "#FFF",
         fontSize: 18
-    }
+    },
+    errorTextInput: {
+        paddingLeft: 10,
+        width: 360,
+        height: 55,
+        borderRadius: 10,
+        backgroundColor: "#244742",
+        borderWidth: 0.6,
+        borderColor: "#ff4d4f",
+        color: "#FFFFFF"
+    },
+    loginBtnDisabled: {
+        backgroundColor: "#12EDC750",
+    },
+    loginTextDisabled: {
+        color: 'rgba(0,0,0,0.3)'
+    },
 });
 
 export default _styles;

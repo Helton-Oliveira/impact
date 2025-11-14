@@ -20,9 +20,18 @@ const styles = StyleSheet.create({
         alignItems: "flex-start",
     },
     textInput: {
-        width: 355,
+        width: 354,
         height: 55,
         backgroundColor: "#244742",
+        borderRadius: 10,
+        paddingLeft: 10
+    },
+    errorInput: {
+        width: 354,
+        height: 55,
+        backgroundColor: "#244742",
+        borderWidth: 0.6,
+        borderColor: "#ff4d4f",
         borderRadius: 10,
         paddingLeft: 10
     },
@@ -39,10 +48,16 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginBottom: 20
     },
+    createAccountBtnDisabled: {
+        backgroundColor: "#12EDC750",
+    },
     createAccountText: {
         textAlign: "center",
         fontWeight: "bold",
         fontSize: 25,
+    },
+    createAccountTextDisabled: {
+        color: 'rgba(0,0,0,0.3)'
     },
     textRedirectLogin: {
         color: "#91C9BF",
