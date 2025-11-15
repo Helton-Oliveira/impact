@@ -5,6 +5,7 @@ import com.digisphere.setup.file.service.FileService
 import com.digisphere.setup.mail.EmailService
 import com.digisphere.setup.user.domain.UserAssociations
 import com.digisphere.setup.user.dto.EmailRequest
+import com.digisphere.setup.user.dto.ResetPasswordRequest
 import com.digisphere.setup.user.dto.UserInput
 import com.digisphere.setup.user.dto.UserOutput
 import com.digisphere.setup.user.extensions.toDomain
@@ -75,9 +76,16 @@ class UserService(
                 ?.also { it.generateResetKey() }
                 ?.let(userRepository::save)
 
+            val baseUrl = email.url.trimEnd('/')
+            val resetLink = "$baseUrl?resetKey=${user?.resetKey}"
+
+
             val context = Context().apply {
                 setVariable("user", user);
-                setVariable("resetLink", "routerLink");
+                setVariable(
+                    "resetLink",
+                    resetLink
+                );
             }
 
             emailService.sendEmail(
@@ -88,13 +96,13 @@ class UserService(
             )
         }
 
-    fun confirmPasswordReset(userInput: UserInput): Result<Boolean?> =
+    fun confirmPasswordReset(resetPasswordRequest: ResetPasswordRequest): Result<Boolean?> =
         runCatching {
-            userInput.toDomain()
-                .takeIf { input -> input.wasEdited() && input.isResetKeyValid(input.resetKey) }
+            userRepository.findByResetKey(resetPasswordRequest.resetKey)
+                ?.takeIf { input -> input.wasEdited() && input.isResetKeyValid(input.resetKey) }
                 ?.let { usr ->
                     usr.markResetKeyAsUsed();
-                    usr.password = passwordEncoder.encode(userInput.password);
+                    usr.password = passwordEncoder.encode(resetPasswordRequest.newPassword);
                     userRepository.save(usr);
                     true
                 } ?: false

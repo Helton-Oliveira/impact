@@ -88,5 +88,17 @@ data class UserOutput(
 
 data class EmailRequest(
     @field:NotBlank
-    val email: String
+    val email: String,
+
+    @field:NotBlank
+    val url: String
+);
+
+
+data class ResetPasswordRequest(
+    @field:NotBlank
+    val newPassword: String,
+
+    @field:NotBlank
+    val resetKey: String
 );

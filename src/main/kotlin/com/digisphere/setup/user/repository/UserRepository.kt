@@ -17,4 +17,12 @@ interface UserRepository : JpaRepository<User, Long> {
     )
     fun findByUsername(@Param("email") email: String): User?
 
+    @Query(
+        nativeQuery = true, //
+        value = " select * from usr_users u       " +//
+                "   where u.reset_key = :resetKey " +//
+                "   and u.active = true           "
+    )
+    fun findByResetKey(@Param("resetKey") resetKey: String): User?
+
 }
