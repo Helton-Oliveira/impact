@@ -20,6 +20,7 @@ export default function AuthLayout() {
                 contentStyle: {
                     backgroundColor: "#12211F",
                 },
+
             }}
         >
             <Stack.Screen name="login/index" options={{headerShown: false}}/>
@@ -31,6 +32,10 @@ export default function AuthLayout() {
             <Stack.Screen name="resetPasswordRequest/index"
                           options={{
                               headerTitle: "Resetar Senha"
+                          }}/>
+            <Stack.Screen name="resetPassword/index"
+                          options={{
+                              headerShown: false
                           }}/>
         </Stack>
     );
