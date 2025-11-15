@@ -7,12 +7,6 @@ export default function _useLoginQuery() {
 
     const executeLogin = useMutation({
         mutationFn: (login: LoginRequest) => authService.login(login),
-        onSuccess: async (data) => {
-            localStorage.setItem("token", data.token!)
-        },
-        onError: (error) => {
-            console.error(error);
-        }
     });
 
     return {
