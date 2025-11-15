@@ -43,7 +43,17 @@ export default function _useUserQuery() {
     });
 
     const resetPasswordRequest = useMutation({
-        mutationFn: (email: string) => service.resetPasswordRequest(email),
+        mutationFn: ({email, url}: {
+            email: string,
+            url: string
+        }) => service.resetPasswordRequest(email, url),
+    });
+
+    const resetPassword = useMutation({
+        mutationFn: ({newPassword, resetKey}: {
+            newPassword: string,
+            resetKey: string
+        }) => service.resetPassword(newPassword, resetKey),
     });
 
     return {
@@ -52,6 +62,7 @@ export default function _useUserQuery() {
         createUser,
         updateUser,
         deleteUser,
-        resetPasswordRequest
+        resetPasswordRequest,
+        resetPassword
     };
 }
