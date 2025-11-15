@@ -1,9 +1,11 @@
 import useFormBuilder from "@/app/components/formBuilderComponent";
 import _useUserQuery from "@/app/queries/user.query";
+import {createURL} from "expo-linking";
 
 export default function _useResetPasswordRequest() {
 
     const {resetPasswordRequest} = _useUserQuery();
+    const url = createURL("/resetPassword");
 
     const {form} = useFormBuilder({
         email: {
@@ -13,7 +15,11 @@ export default function _useResetPasswordRequest() {
     });
 
     async function requestResetPassword() {
-        await resetPasswordRequest.mutateAsync(form.email.value);
+        const dto = {
+            email: form.email.value,
+            url: url,
+        }
+        await resetPasswordRequest.mutateAsync(dto);
     }
 
     return {
@@ -21,7 +27,7 @@ export default function _useResetPasswordRequest() {
         requestResetPassword,
         isPending: resetPasswordRequest.isPending,
         isSuccess: resetPasswordRequest.isSuccess,
-        isError: resetPasswordRequest.isError
+        isError: resetPasswordRequest.isError,
     }
 
 }
