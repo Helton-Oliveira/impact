@@ -1,5 +1,6 @@
 package com.digisphere.setup.file.domain
 
+import com.digisphere.setup.Compaign.domain.Campaign
 import com.digisphere.setup.config.root.BaseEntity
 import com.digisphere.setup.file.enum.FileType
 import com.digisphere.setup.user.domain.User
@@ -21,4 +22,7 @@ class File : BaseEntity() {
     @JsonIgnoreProperties(value = ["files"])
     var user: User? = null;
 
+    @OneToOne(mappedBy = "file")
+    @JsonIgnoreProperties(value = ["file"])
+    var campaign: Campaign? = null;
 }
