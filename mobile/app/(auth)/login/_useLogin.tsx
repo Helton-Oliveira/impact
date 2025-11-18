@@ -7,7 +7,10 @@ export default function _useLogin() {
     const {executeLogin} = _useLoginQuery();
 
     const {form} = useFormBuilder({
-        email: {initial: "", validate: (v) => (!v || v.length === 0 || !v.includes("@") ? "Nome é obrigatório" : null)},
+        email: {
+            initial: "",
+            validate: (v) => (!v || v.length === 0 || !v.includes("@") ? "Nome é obrigatório" : null)
+        },
         password: {
             initial: "",
             validate: (v) => (!v || v.length === 0 || v.length < 6 ? "Sobrenome obrigatório" : null)
@@ -21,6 +24,10 @@ export default function _useLogin() {
         } as LoginRequest
 
         await executeLogin.mutateAsync(login);
+
+        if (executeLogin.isSuccess) {
+            router.replace("/(tabs)/home");
+        }
     }
 
     function goToCreateAccount(): void {
@@ -42,6 +49,13 @@ export default function _useLogin() {
         router.push("/resetPasswordRequest");
     }
 
-    return {...form, login, goToCreateAccount, isPending: executeLogin.isPending, isDisable, goToResetPasswordRequest}
+    return {
+        ...form,
+        login,
+        goToCreateAccount,
+        isPending: executeLogin.isPending,
+        isDisable,
+        goToResetPasswordRequest,
+    }
 
 }
