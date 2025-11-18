@@ -1,5 +1,4 @@
 import {Image, Text, TouchableOpacity, View} from "react-native";
-import _styles from "@/app/components/imageLoader/_styles";
 import _useImageLoader from "@/app/components/imageLoader/_useImageLoader";
 import * as ImagePicker from 'expo-image-picker';
 
@@ -14,24 +13,41 @@ export default function ImageLoader({onImageSelected, textInput, switchButtonTex
     const {handleImageSelection, selectedImage} = _useImageLoader(onImageSelected);
 
     return (
-        <View style={_styles.avatarSection}>
+        <View className="gap-[10px] items-start w-[360px]">
 
-            <Text style={_styles.titleInput}>{actionField}</Text>
+            <Text className="font-bold text-[18px] text-text-default">
+                {actionField}
+            </Text>
 
             {selectedImage ? (
-                <View style={_styles.avatarContainer}>
-                    <Image source={{uri: selectedImage?.uri}} style={_styles.avatarImage}/>
-                    <TouchableOpacity style={_styles.changeAvatarBtn} onPress={handleImageSelection}>
-                        <Text style={_styles.avatarText}>{switchButtonText}</Text>
+                <View className="items-center justify-center mt-[10px]">
+
+                    <Image
+                        source={{uri: selectedImage?.uri}}
+                        className="w-[120px] h-[120px] rounded-full border-[3px] border-background-secondary mb-[10px]"
+                    />
+
+                    <TouchableOpacity
+                        className="bg-background-secondary py-[8px] px-[15px] rounded-[5px] items-center mt-[5px]"
+                        onPress={handleImageSelection}
+                    >
+                        <Text className="text-background-secondary text-[16px] font-semibold">
+                            {switchButtonText}
+                        </Text>
                     </TouchableOpacity>
                 </View>
             ) : (
-                <TouchableOpacity style={_styles.avatarBtn}
-                                  onPress={handleImageSelection}>
-                    <Text style={_styles.avatarText}>{textInput}</Text>
+                <TouchableOpacity
+                    className=" w-[96%] h-[150px] rounded-[10px] bg-background-secondary justify-center items-center border border-background-tertiary "
+                    onPress={handleImageSelection}
+                >
+                    <Text className="text-background-tertiary text-[16px] font-semibold">
+                        {textInput}
+                    </Text>
                 </TouchableOpacity>
             )}
 
         </View>
+
     )
 }

@@ -1,5 +1,4 @@
 import {ActivityIndicator, Text, TextInput, TouchableOpacity, View} from "react-native";
-import _styles from "@/app/(auth)/resetPassword/_styles";
 import _useResetPassword from "@/app/(auth)/resetPassword/_useResetPassword";
 
 
@@ -16,39 +15,75 @@ export default function ResetPasswordScreen() {
     } = _useResetPassword();
 
     return (
-        <View style={_styles.container}>
-            <View style={_styles.card}>
-                <Text style={_styles.title}>Resetar senha</Text>
-                <Text style={_styles.subtitle}>Crie uma nova senha segura para sua conta.</Text>
+        <View className="flex-1 bg-background-primary items-center pt-[130px] pb-[160px] p-[10px]">
+            <View
+                className="w-full bg-background-secondary rounded-[15px] items-center p-[10px] gap-[30px] self-stretch">
 
-                <TextInput style={_styles.textInput} placeholder={"Nova senha..."} value={password.value}
-                           textContentType="password"
-                           placeholderTextColor="#244742" onChangeText={password.setValue}/>
+                <Text className="text-text-default text-[37px] font-bold text-center">
+                    Resetar senha
+                </Text>
 
-                <TextInput style={_styles.textInput} placeholder={"Confirme a nova senha..."}
-                           value={confirmPassword.value}
-                           placeholderTextColor="#244742" onChangeText={confirmPassword.setValue}/>
+                <Text className="text-text-default text-[18px] text-center">
+                    Crie uma nova senha segura para sua conta.
+                </Text>
 
-                {isPending
-                    ? <ActivityIndicator style={{alignItems: "center", justifyContent: "center"}}/>
-                    : <TouchableOpacity style={_styles.btn} onPress={() => requestResetPassword()}
-                                        disabled={!canSubmit()}>
-                        <Text style={_styles.textBtn}>Redefinir senha</Text></TouchableOpacity>
-                }
+                <TextInput
+                    className="w-full h-[12%] bg-background-tertiary rounded-[10px] pl-[15px]"
+                    placeholder="Nova senha..."
+                    placeholderTextColor="#244742"
+                    textContentType="password"
+                    value={password.value}
+                    onChangeText={password.setValue}
+                />
+
+                <TextInput
+                    className="w-full h-[12%] bg-background-tertiary rounded-[10px] pl-[15px]"
+                    placeholder="Confirme a nova senha..."
+                    placeholderTextColor="#244742"
+                    value={confirmPassword.value}
+                    onChangeText={confirmPassword.setValue}
+                />
+
+                {isPending ? (
+                    <ActivityIndicator className="items-center justify-center"/>
+                ) : (
+                    <TouchableOpacity
+                        className={`w-full h-[12%] rounded-[10px] justify-center ${
+                            canSubmit() ? "bg-accent-primary" : "bg-state-disabled"
+                        }`}
+                        disabled={!canSubmit()}
+                        onPress={() => requestResetPassword()}
+                    >
+                        <Text className="font-bold text-[18px] text-center text-text-default">
+                            Redefinir senha
+                        </Text>
+                    </TouchableOpacity>
+                )}
 
                 {(isSuccess && !isPending) && (
-                    <View style={_styles.confirmMessageCard}>
-                        <Text style={_styles.confirmMessageText}>Senha alterada com sucesso!</Text>
+                    <View className="
+                w-full h-[9%] rounded-[10px] justify-center
+                bg-green-100 border-2 border-green-600
+            ">
+                        <Text className="text-green-700 text-center">
+                            Senha alterada com sucesso!
+                        </Text>
                     </View>
                 )}
 
                 {isError && (
-                    <View style={_styles.confirmMessageCardError}>
-                        <Text style={_styles.confirmMessageTextError}>Erro ao resetar senha!</Text>
+                    <View className="
+                w-full h-[9%] rounded-[10px] justify-center
+                bg-red-100 border-2 border-red-600
+            ">
+                        <Text className="text-red-700 text-center">
+                            Erro ao resetar senha!
+                        </Text>
                     </View>
                 )}
 
             </View>
         </View>
+
     )
 }
