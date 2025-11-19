@@ -14,8 +14,8 @@ export default function LoginPage() {
     } = _useLogin();
 
     return (
-        <SafeAreaView className="flex-1 bg-background-primary items-center justify-center ">
-            <View className="items-center justify-center">
+        <SafeAreaView className="flex-1 bg-background-primary justify-center">
+            <View className="items-center justify-center top-[-130]">
                 <Text className="text-text-default font-bold text-3xl bottom-10">
                     Donate & Invest
                 </Text>
@@ -28,8 +28,8 @@ export default function LoginPage() {
                         placeholderTextColor="#91C9BF"
                         className={
                             !email.isTouched || email.isValid
-                                ? "w-96 size-16 bg-background-secondary rounded-md p-5"
-                                : "w-96 size-16 text-text-disabled p-5 rounded-md border border-rose-600"
+                                ? "w-96 size-16 bg-background-secondary rounded-lg p-5"
+                                : "w-96 size-16 text-text-disabled p-5 rounded-lg border border-rose-600"
                         } onBlur={email.validate}>
                     </TextInput>
 
@@ -38,14 +38,14 @@ export default function LoginPage() {
                         placeholderTextColor="#91C9BF"
                         className={
                             !password.isTouched || password.isValid
-                                ? "w-96 size-16 bg-background-secondary rounded-md p-5"
-                                : "w-96 size-16 text-text-disabled p-5 border border-rose-600 rounded-md"}
+                                ? "w-96 size-16 bg-background-secondary rounded-lg p-5"
+                                : "w-96 size-16 text-text-disabled p-5 border border-rose-600 rounded-lg"}
                         onBlur={password.validate}>
                     </TextInput>
 
                     <TouchableOpacity onPress={() => login()}
                                       className={
-                                          ` items-center justify-center w-96 size-16 rounded-md 
+                                          ` items-center justify-center w-96 size-16 rounded-lg 
                                       ${isDisable() ? "bg-state-disabled" : "bg-accent-primary"}`}
                                       disabled={isDisable()}>
                         {
@@ -53,7 +53,7 @@ export default function LoginPage() {
                                 ? <ActivityIndicator className="items-center justify-center"/>
                                 : <Text
                                     className={
-                                        ` text-2xl font-bold
+                                        ` text-2xl font-bold text-text-default
                                         ${isDisable() && "color-text-disabled"}`
                                     }>Login</Text>
                         }
@@ -62,12 +62,12 @@ export default function LoginPage() {
 
                     <TouchableOpacity className=""
                                       onPress={goToResetPasswordRequest}>
-                        <Text className="text-text-  underline">Esqueceu a Senha?</Text>
+                        <Text className="text-text-default underline">Esqueceu a Senha?</Text>
                     </TouchableOpacity>
                 </View>
 
                 <TouchableOpacity
-                    className="items-center justify-center bg-accent-primary w-52 size-12 rounded-md top-40"
+                    className="items-center justify-center bg-accent-primary w-52 size-12 rounded-lg top-40"
                     onPress={() => {
                         goToCreateAccount()
                     }}>

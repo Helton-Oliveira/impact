@@ -9,7 +9,7 @@ import {
     View
 } from "react-native";
 import useCreateAccount from "./_useCreateAccount"
-import ImageLoader from "@/app/components/imageLoader";
+import ImageLoader from "@/components/imageLoader";
 
 export default function CreateAccount() {
     const {

@@ -2,13 +2,13 @@ import {router} from "expo-router";
 import {useState} from "react";
 import * as ImagePicker from 'expo-image-picker';
 import User from "@/src/user/user.model";
-import useFormBuilder from "@/app/components/formBuilderComponent";
+import useFormBuilder from "@/components/formBuilderComponent";
 import {Role} from "@/src/root/Role";
 import AppFile from "@/src/file/file.mode";
 import {FileType} from "@/src/file/file.type.enum";
 import 'react-native-get-random-values';
 import {v4 as uuidv4} from 'uuid';
-import _useUserQuery from "@/app/queries/user.query";
+import _useUserQuery from "@/queries/user.query";
 
 type ExpoAsset = ImagePicker.ImagePickerAsset;
 

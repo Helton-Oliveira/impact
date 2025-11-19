@@ -16,7 +16,7 @@ export default function AuthLayout() {
                     fontSize: 25
                 },
                 headerBackTitle: "",
-                animation: "slide_from_right",
+                animation: "none",
                 contentStyle: {
                     backgroundColor: "#12211F",
                 },

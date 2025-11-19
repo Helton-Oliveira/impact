@@ -1,5 +1,5 @@
 import {Image, Text, TouchableOpacity, View} from "react-native";
-import _useImageLoader from "@/app/components/imageLoader/_useImageLoader";
+import _useImageLoader from "@/components/imageLoader/_useImageLoader";
 import * as ImagePicker from 'expo-image-picker';
 
 interface ImageLoaderProps {
@@ -41,7 +41,7 @@ export default function ImageLoader({onImageSelected, textInput, switchButtonTex
                     className=" w-[96%] h-[150px] rounded-[10px] bg-background-secondary justify-center items-center border border-background-tertiary "
                     onPress={handleImageSelection}
                 >
-                    <Text className="text-background-tertiary text-[16px] font-semibold">
+                    <Text className="text-text-default text-[16px] opacity-[0.6]">
                         {textInput}
                     </Text>
                 </TouchableOpacity>

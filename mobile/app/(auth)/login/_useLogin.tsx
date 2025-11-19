@@ -1,7 +1,7 @@
 import {LoginRequest} from "@/src/auth/dto/login.dto";
 import {router} from "expo-router";
 import _useLoginQuery from "@/app/(auth)/login/_login.query";
-import useFormBuilder from "@/app/components/formBuilderComponent";
+import useFormBuilder from "@/components/formBuilderComponent";
 
 export default function _useLogin() {
     const {executeLogin} = _useLoginQuery();
