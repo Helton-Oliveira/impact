@@ -5,6 +5,7 @@ export interface ILoginRequest {
 
 export interface ILoginResponse {
     token?: string,
+    refreshToken?: string
 }
 
 export class LoginRequest implements ILoginRequest {
@@ -13,5 +14,6 @@ export class LoginRequest implements ILoginRequest {
 }
 
 export class LoginResponse implements ILoginResponse {
-    public readonly token?: string
+    public readonly accessToken?: string
+    public readonly refreshToken?: string
 }

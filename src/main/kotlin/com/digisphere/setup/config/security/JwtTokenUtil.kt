@@ -15,7 +15,7 @@ class JwtTokenUtil(
     @Value("\${jwt.secret}")
     private lateinit var secret: String
 
-    private val accessExpiration: Long = 1000L * 60 * 15
+    private val accessExpiration: Long = 1000L * 60 * 60 * 24
     private val refreshExpiration: Long = 1000L * 60 * 60 * 24 * 30
 
     fun generateAccessToken(username: String, roles: Collection<GrantedAuthority>): String {
