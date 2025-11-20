@@ -7,29 +7,29 @@ const service = new CampaignService();
 export default function _useCampaignQuery() {
     const queryClient = useQueryClient();
 
-    const campaignFindAll = useQuery({
+    const getAll = useQuery({
         queryKey: ["campaigns"],
         queryFn: () => service.findAll(),
     });
 
-    const campaignFindById = (id: number) => {
+    const getById = (id: number, options?: { enabled: boolean }) => {
         return useQuery({
-            queryKey: ["campaignById", id],
+            queryKey: ["campaign", id],
             queryFn: () => service.finById(id),
-            enabled: !!id,
+            ...options
         });
     }
 
-    const createCampaign = useMutation({
+    const create = useMutation({
         mutationFn: (data: Campaign) => service.create(data),
         onSuccess: async () => {
             await queryClient.invalidateQueries({queryKey: ["campaigns"]});
         }
     });
 
-    const updateCampaign = useMutation({
-        mutationFn: ({data}: { data: Campaign }) =>
-            service.updateCampaign(data),
+    const update = useMutation({
+        mutationFn: (data: Campaign) =>
+            service.update(data),
         onSuccess: async () => {
             await queryClient.invalidateQueries({queryKey: ["campaignById", "campaigns"]});
         }
@@ -44,10 +44,10 @@ export default function _useCampaignQuery() {
 
 
     return {
-        campaignFindAll,
-        campaignFindById,
-        createCampaign,
-        updateCampaign,
+        getAll,
+        getById,
+        create,
+        update,
         deleteCampaign,
     };
 }

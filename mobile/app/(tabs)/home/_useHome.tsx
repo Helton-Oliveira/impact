@@ -2,12 +2,12 @@ import _useCampaignQuery from "@/queries/campaign.query";
 
 export const _useHome = () => {
 
-    const {campaignFindAll} = _useCampaignQuery();
+    const {getAll} = _useCampaignQuery();
 
     return {
-        campaigns: campaignFindAll.data || [],
-        isLoadingCampaigns: campaignFindAll.isLoading,
-        isErrorCampaigns: campaignFindAll.isError,
-        isSuccessCampaigns: campaignFindAll.isSuccess,
+        campaigns: getAll.data || [],
+        isLoadingCampaigns: getAll.isLoading,
+        isErrorCampaigns: getAll.isError,
+        isSuccessCampaigns: getAll.isSuccess,
     }
 }
