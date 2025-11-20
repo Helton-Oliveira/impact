@@ -131,7 +131,7 @@ class UserResource(
 
     @GetMapping("/me")
     fun getCurrentUser(): ResponseEntity<*> =
-        userService.getCurrentUser()
+        userService.getCurrentUser(setOf(UserAssociations.FILES))
             .fold(
                 onFailure = { err ->
                     err.printStackTrace()

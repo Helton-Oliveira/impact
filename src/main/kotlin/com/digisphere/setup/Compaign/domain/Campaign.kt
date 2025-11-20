@@ -10,7 +10,7 @@ import jakarta.persistence.*
 import java.time.Instant
 
 @Entity
-@Table(name = "com_campaigns")
+@Table(name = "cam_campaigns")
 class Campaign : BaseEntity() {
 
     lateinit var name: String;

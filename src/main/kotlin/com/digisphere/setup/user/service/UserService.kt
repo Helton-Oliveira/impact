@@ -109,10 +109,11 @@ class UserService(
                 } ?: false
         }
 
-    fun getCurrentUser(): Result<UserOutput?> =
+    fun getCurrentUser(fetches: Set<UserAssociations> = emptySet()): Result<UserOutput?> =
         runCatching {
             userRepository
                 .findByUsername(getAuthenticatedUsername())
+                ?.also { if (fetches.isNotEmpty()) it.applyFetches(fetches) }
                 ?.toOutput();
         }
 }
