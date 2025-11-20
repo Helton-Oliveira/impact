@@ -10,18 +10,18 @@
 
     <!-- user_id -->
     <changeSet id="f26898b0-5a2b-45e4-a898-b05a2b95e40f" author="heltonOliveira">
-        <addForeignKeyConstraint baseTableName="com_campaigns"
+        <addForeignKeyConstraint baseTableName="cam_campaigns"
                                  baseColumnNames="user_id"
-                                 constraintName="fk_com_campaigns__user_id"
+                                 constraintName="fk_cam_campaigns__user_id"
                                  referencedTableName="usr_users"
                                  referencedColumnNames="id"/>
     </changeSet>
 
     <!-- file_id -->
     <changeSet id="ab0cec54-260d-46ea-8cec-54260d36eae2" author="heltonOliveira">
-        <addForeignKeyConstraint baseTableName="com_campaigns"
+        <addForeignKeyConstraint baseTableName="cam_campaigns"
                                  baseColumnNames="file_id"
-                                 constraintName="fk_com_campaigns__file_id"
+                                 constraintName="fk_cam_campaigns__file_id"
                                  referencedTableName="adm_files"
                                  referencedColumnNames="id"/>
     </changeSet>

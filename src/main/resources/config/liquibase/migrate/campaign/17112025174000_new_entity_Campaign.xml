@@ -7,7 +7,7 @@
 
 
     <changeSet id="33eb835e-17e7-4368-ab83-5e17e7336882" author="heltonOliveira">
-        <createTable tableName="com_campaigns">
+        <createTable tableName="cam_campaigns">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" unique="true" nullable="false"/>
             </column>
@@ -48,6 +48,10 @@
                 <constraints nullable="false"/>
             </column>
 
+            <column name="status" type="text">
+                <constraints nullable="false"/>
+            </column>
+
             <column name="user_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
@@ -57,31 +61,35 @@
             </column>
         </createTable>
 
-        <createIndex tableName="com_campaigns" indexName="idx_com_campaigns__id">
+        <createIndex tableName="cam_campaigns" indexName="idx_cam_campaigns__id">
             <column name="id" type="bigint"/>
         </createIndex>
 
-        <createIndex tableName="com_campaigns" indexName="idx_com_campaigns__uuid">
+        <createIndex tableName="cam_campaigns" indexName="idx_cam_campaigns__uuid">
             <column name="uuid" type="bigint"/>
         </createIndex>
 
-        <createIndex tableName="com_campaigns" indexName="idx_com_campaigns__active">
+        <createIndex tableName="cam_campaigns" indexName="idx_cam_campaigns__active">
             <column name="active" type="boolean"/>
         </createIndex>
 
-        <createIndex tableName="com_campaigns" indexName="idx_com_campaigns__name">
+        <createIndex tableName="cam_campaigns" indexName="idx_cam_campaigns__name">
             <column name="name" type="text"/>
         </createIndex>
 
-        <createIndex tableName="com_campaigns" indexName="idx_com_campaigns__type_of_donation">
+        <createIndex tableName="cam_campaigns" indexName="idx_cam_campaigns__type_of_donation">
             <column name="type_of_donation" type="text"/>
         </createIndex>
 
-        <createIndex tableName="com_campaigns" indexName="idx_com_campaigns__user_id">
+        <createIndex tableName="cam_campaigns" indexName="idx_cam_campaigns__status">
+            <column name="status" type="text"/>
+        </createIndex>
+
+        <createIndex tableName="cam_campaigns" indexName="idx_cam_campaigns__user_id">
             <column name="user_id" type="bigint"/>
         </createIndex>
 
-        <createIndex tableName="com_campaigns" indexName="idx_com_campaigns__file_id">
+        <createIndex tableName="cam_campaigns" indexName="idx_cam_campaigns__file_id">
             <column name="file_id" type="bigint"/>
         </createIndex>
 
