@@ -5,12 +5,12 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import {CampaignCard} from "@/app/(tabs)/(campaign)/campaignList";
 
 export default function HomeScreen() {
-    const {campaigns, isLoadingCampaigns, isErrorCampaigns, isSuccessCampaigns} = _useHome();
+    const {campaigns, isLoadingCampaigns, isErrorCampaigns, isSuccessCampaigns, imageUri} = _useHome();
     return (
         <SafeAreaView className="flex-1 bg-background-primary p-8">
             <View className="w-[100%] h-[8%] flex-row justify-around items-center">
                 <Image className="rounded-full justify-start w-[15%] h-[90%]"
-                       source={{uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRi5D1-ZZfHsIYJY5AXeI6anWvJr25OYXsUoA&s"}}/>
+                       source={{uri: imageUri}}/>
                 <Text className="text-text-default font-bold left-[-15] text-lg">Bem vindo de volta nome!</Text>
                 <TouchableOpacity>
                     <Ionicons name="notifications-outline" size={28} color="#FFFF"/>
