@@ -1,6 +1,7 @@
 import {ActivityIndicator, Text, TextInput, TouchableOpacity, View} from "react-native";
 import _useLogin from "./_useLogin";
 import {SafeAreaView} from "react-native-safe-area-context";
+import React from "react";
 
 export default function LoginPage() {
     const {
@@ -11,7 +12,23 @@ export default function LoginPage() {
         isPending,
         isDisable,
         goToResetPasswordRequest,
+        tokenLoaded,
+        isLoadingUser,
+        user
     } = _useLogin();
+
+
+    if (!tokenLoaded || isLoadingUser) {
+        return (
+            <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+                <ActivityIndicator size="large" color="#0000ff"/>
+            </View>
+        );
+    }
+
+    if (user) {
+        return null;
+    }
 
     return (
         <SafeAreaView className="flex-1 bg-background-primary justify-center">

@@ -2,9 +2,13 @@ import {LoginRequest} from "@/src/auth/dto/login.dto";
 import {router} from "expo-router";
 import _useLoginQuery from "@/app/(auth)/login/_login.query";
 import useFormBuilder from "@/components/formBuilderComponent";
+import {getAccessToken, loadTokensFromStorage, setAccessToken, setRefreshToken} from "@/src/root/session.utils";
+import {useEffect, useState} from "react";
 
 export default function _useLogin() {
-    const {executeLogin} = _useLoginQuery();
+    const {executeLogin, getCurrentUser} = _useLoginQuery();
+    const [tokenLoaded, setTokenLoaded] = useState(false);
+    const {data: user, isLoading} = getCurrentUser();
 
     const {form} = useFormBuilder({
         email: {
@@ -17,6 +21,20 @@ export default function _useLogin() {
         },
     });
 
+    useEffect(() => {
+        async function init() {
+            await loadTokensFromStorage();
+            setTokenLoaded(true);
+
+            const token = getAccessToken();
+            if (token && user) {
+                router.replace("/(tabs)/home");
+            }
+        }
+
+        init();
+    }, [user]);
+
     async function login() {
         const login = {
             email: form.email.value,
@@ -26,7 +44,14 @@ export default function _useLogin() {
         await executeLogin.mutateAsync(login);
 
         if (executeLogin.isSuccess) {
-            router.replace("/(tabs)/home");
+            const accessToken = executeLogin.data.accessToken;
+            const refreshToken = executeLogin.data.refreshToken;
+
+            if (accessToken) await setAccessToken(accessToken);
+            if (refreshToken) await setRefreshToken(refreshToken);
+
+            const {data: user} = getCurrentUser();
+            if (user) router.replace("/(tabs)/home");
         }
     }
 
@@ -56,6 +81,10 @@ export default function _useLogin() {
         isPending: executeLogin.isPending,
         isDisable,
         goToResetPasswordRequest,
+        getCurrentUser,
+        tokenLoaded,
+        isLoadingUser: isLoading,
+        user
     }
 
 }

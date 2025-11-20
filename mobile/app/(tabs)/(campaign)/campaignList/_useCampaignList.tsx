@@ -3,7 +3,7 @@ import useFormBuilder from "@/components/formBuilderComponent";
 import {router} from "expo-router";
 
 export const _useCampaignList = () => {
-    const {campaignFindAll} = _useCampaignQuery();
+    const {getAll} = _useCampaignQuery();
 
     const form = useFormBuilder({
         visible: {
@@ -16,10 +16,10 @@ export const _useCampaignList = () => {
     }
 
     return {
-        campaigns: campaignFindAll.data || [],
-        isLoading: campaignFindAll.isLoading,
-        isError: campaignFindAll.isError,
-        isSuccess: campaignFindAll.isSuccess,
+        campaigns: getAll.data || [],
+        isLoading: getAll.isLoading,
+        isError: getAll.isError,
+        isSuccess: getAll.isSuccess,
         openCreateCampaignScreen
     }
 }

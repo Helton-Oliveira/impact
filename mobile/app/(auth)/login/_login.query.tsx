@@ -1,24 +1,35 @@
-import {useMutation} from "@tanstack/react-query";
+import {useMutation, useQuery} from "@tanstack/react-query";
 import AuthService from "@/src/auth/auth.service";
 import {LoginRequest} from "@/src/auth/dto/login.dto";
-import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
+import {getAccessToken, setAccessToken, setRefreshToken} from "@/src/root/session.utils";
+import UserService from "@/src/user/user.service";
 
 export default function _useLoginQuery() {
     const authService = new AuthService();
+    const userService = new UserService();
 
     const executeLogin = useMutation({
         mutationFn: (login: LoginRequest) => authService.login(login),
         onSuccess: async (data) => {
-            try {
-                await asyncStorage.setItem("token", JSON.stringify(data.token))
-            } catch (e) {
-                console.error(e);
+            if (data.accessToken && data.refreshToken) {
+                await setAccessToken(data.accessToken);
+                await setRefreshToken(data.refreshToken);
             }
         }
     });
 
+    const getCurrentUser = () => {
+        const token = getAccessToken();
+        return useQuery({
+            queryKey: ['userSession'],
+            queryFn: () => userService.getCurrentUser(),
+            enabled: Boolean(token),
+        });
+    };
+
     return {
-        executeLogin
+        executeLogin,
+        getCurrentUser
     }
 
 }
