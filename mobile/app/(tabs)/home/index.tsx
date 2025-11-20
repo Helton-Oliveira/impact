@@ -1,25 +1,8 @@
 import {FlatList, Image, Text, TouchableOpacity, View} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {_useHome} from "@/app/(tabs)/home/_useHome";
-import Campaign from "@/src/campaign/campaign.model";
 import Ionicons from "@expo/vector-icons/Ionicons";
-
-type CampaignCardProps = {
-    item: Campaign;
-}
-
-const CampaignCard = ({item}: CampaignCardProps) => {
-    return (
-        <TouchableOpacity>
-            <Image
-                className="rounded-lg "
-                source={{uri: ""}}
-            />
-            <Text>{item.name}</Text>
-            <Text>{item.purpose}</Text>
-        </TouchableOpacity>
-    );
-}
+import {CampaignCard} from "@/app/(tabs)/(campaign)/campaignList";
 
 export default function HomeScreen() {
     const {campaigns, isLoadingCampaigns, isErrorCampaigns, isSuccessCampaigns} = _useHome();
