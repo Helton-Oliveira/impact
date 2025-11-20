@@ -24,10 +24,17 @@ export default function HomeLayout() {
 
             <Tabs.Screen name="home/index"
                          options={{
-                             headerShown: false,
                              title: "Home",
                              tabBarIcon: ({color}) => (
                                  <Ionicons name="home" size={28} color={color}/>
+                             )
+                         }}/>
+
+            <Tabs.Screen name="(campaign)"
+                         options={{
+                             title: "Campanha",
+                             tabBarIcon: ({color}) => (
+                                 <Ionicons name="albums" size={28} color={color}/>
                              )
                          }}/>
 
