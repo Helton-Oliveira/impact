@@ -1,11 +1,19 @@
 package com.digisphere.setup.config.root.extensions
 
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.core.userdetails.UserDetails
 
 fun getAuthenticatedUsername(): String =
     SecurityContextHolder
         .getContext()
         .authentication
         ?.takeIf { it.isAuthenticated }
-        ?.let { it.principal as String }
-        ?: "system@email.com";
+        ?.principal
+        ?.let { principal ->
+            when (principal) {
+                is UserDetails -> principal.username
+                is String -> principal
+                else -> principal.toString()
+            }
+        }
+        ?: "system@email.com"

@@ -1,6 +1,7 @@
 package com.digisphere.setup.user.service
 
 import com.digisphere.setup.config.root.extensions.applyFetches
+import com.digisphere.setup.config.root.extensions.getAuthenticatedUsername
 import com.digisphere.setup.file.service.FileService
 import com.digisphere.setup.mail.EmailService
 import com.digisphere.setup.user.domain.UserAssociations
@@ -106,5 +107,12 @@ class UserService(
                     userRepository.save(usr);
                     true
                 } ?: false
+        }
+
+    fun getCurrentUser(): Result<UserOutput?> =
+        runCatching {
+            userRepository
+                .findByUsername(getAuthenticatedUsername())
+                ?.toOutput();
         }
 }

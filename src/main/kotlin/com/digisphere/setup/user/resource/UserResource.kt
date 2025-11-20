@@ -129,4 +129,14 @@ class UserResource(
                 onSuccess = { ResponseEntity.ok(it) }
             )
 
+    @GetMapping("/me")
+    fun getCurrentUser(): ResponseEntity<*> =
+        userService.getCurrentUser()
+            .fold(
+                onFailure = { err ->
+                    err.printStackTrace()
+                    ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(err.message)
+                },
+                onSuccess = { ResponseEntity.ok(it) }
+            )
 }
