@@ -29,35 +29,50 @@ Content-Type: application/json
 ###
 
 ### GET request to example server
+# @no-cookie
 POST http://localhost:8080/api/auth/login
 Content-Type: application/json
 
+
 {
   "email": "steve@avenger.com",
-  "password": "dsweERT5$:"
+  "password": "230ASD#:"
 }
 
 > {%
-    client.global.set("jwt", response.body.token)
+    client.global.set("jwtAccessToken", response.body.accessToken)
+    client.global.set("jwtRefreshToken", response.body.refreshToken)
 %}
 
 ###
 
+### POST refreshToken
+# @no-cookie
+POST http://localhost:8080/api/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "{{jwtRefreshToken}}"
+}
+
+###
+
+
 ### GET request to example server
 GET http://localhost:8080/api/users/36
-Authorization: Bearer {{jwt}}
+Authorization: Bearer {{jwtAccessToken}}
 
 ###
 
 ### GET request to example server
 GET http://localhost:8080/api/users
-Authorization: Bearer {{jwt}}
+Authorization: Bearer {{jwtAccessToken}}
 
 ###
 
 ### GET request to example server
 POST http://localhost:8080/api/users/request-reset-password
-Authorization: Bearer {{jwt}}
+Authorization: Bearer {{jwtAccessToken}}
 Content-Type: application/json
 
 {
@@ -79,7 +94,7 @@ Content-Type: application/json
 
 ### GET request to example server
 POST http://localhost:8080/api/users/reset-password
-Authorization: Bearer {{jwt}}
+Authorization: Bearer {{jwtAccessToken}}
 Content-Type: application/json
 
 {
@@ -100,3 +115,4 @@ Content-Type: application/json
 }
 
 ###
+

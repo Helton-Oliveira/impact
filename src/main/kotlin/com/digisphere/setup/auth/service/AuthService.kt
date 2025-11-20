@@ -2,6 +2,7 @@ package com.digisphere.setup.auth.service
 
 import com.digisphere.setup.auth.dto.LoginRequest
 import com.digisphere.setup.auth.dto.LoginResponse
+import com.digisphere.setup.auth.dto.TokenResponse
 import com.digisphere.setup.config.security.JwtTokenUtil
 import com.digisphere.setup.config.security.UserDetailsServiceImpl
 import org.springframework.security.authentication.AuthenticationManager
@@ -16,23 +17,45 @@ class AuthService(
     private val userDetailsServiceImpl: UserDetailsServiceImpl
 ) {
 
-
     fun login(credentials: LoginRequest): Result<LoginResponse> = runCatching {
-        val auth = manager.authenticate(
-            UsernamePasswordAuthenticationToken(
-                credentials.email,
-                credentials.password
-            )
-        )
 
-        SecurityContextHolder.getContext().authentication = auth;
+        val auth = manager.authenticate(
+            UsernamePasswordAuthenticationToken(credentials.email, credentials.password)
+        )
+        SecurityContextHolder.getContext().authentication = auth
 
         val username = auth.name
         val userDetails = userDetailsServiceImpl.loadUserByUsername(username)
 
-        val token = jwtTokenUtil.generateToken(userDetails.username, userDetails.authorities)
+        val accessToken = jwtTokenUtil.generateAccessToken(
+            userDetails.username,
+            userDetails.authorities
+        )
 
-        LoginResponse(token!!)
+        val refreshToken = jwtTokenUtil.generateRefreshToken(
+            userDetails.username
+        )
+
+        LoginResponse(
+            accessToken = accessToken,
+            refreshToken = refreshToken
+        )
+    }
+
+    fun refreshToken(refreshToken: String) = runCatching {
+        if (!jwtTokenUtil.validate(refreshToken)) {
+            throw RuntimeException("Invalid refresh token")
+        }
+
+        val username = jwtTokenUtil.extractUsername(refreshToken)
+        val user = userDetailsServiceImpl.loadUserByUsername(username)
+
+        val newAccessToken = jwtTokenUtil.generateAccessToken(
+            username,
+            user.authorities
+        )
+
+        TokenResponse(newAccessToken);
     }
 
 }

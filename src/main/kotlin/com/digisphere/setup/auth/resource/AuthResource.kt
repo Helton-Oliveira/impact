@@ -1,7 +1,7 @@
 package com.digisphere.setup.auth.resource
 
 import com.digisphere.setup.auth.dto.LoginRequest
-import com.digisphere.setup.auth.dto.LoginResponse
+import com.digisphere.setup.auth.dto.RefreshTokenRequest
 import com.digisphere.setup.auth.service.AuthService
 import jakarta.transaction.Transactional
 import org.springframework.http.HttpStatus
@@ -19,12 +19,28 @@ class AuthResource(
 ) {
 
     @PostMapping("/login")
-    fun login(@RequestBody credentials: LoginRequest): ResponseEntity<LoginResponse> {
+    fun login(@RequestBody credentials: LoginRequest): ResponseEntity<*> {
         authService.login(credentials)
             .fold(
-                onFailure = { return ResponseEntity.status(HttpStatus.CONFLICT).body(null) },
+                onFailure = { err ->
+                    err.printStackTrace()
+                    return ResponseEntity.status(HttpStatus.CONFLICT).body(err.message)
+                },
                 onSuccess = { return ResponseEntity.ok().body(it) }
             )
+    }
+
+    @PostMapping("/refresh")
+    fun refresh(@RequestBody request: RefreshTokenRequest): ResponseEntity<*> {
+        authService.refreshToken(request.refreshToken)
+            .fold(
+                onFailure = { err ->
+                    err.printStackTrace()
+                    return ResponseEntity.status(HttpStatus.CONFLICT).body(err.message)
+                },
+                onSuccess = { return ResponseEntity.ok().body(it) }
+            )
+
     }
 
 }

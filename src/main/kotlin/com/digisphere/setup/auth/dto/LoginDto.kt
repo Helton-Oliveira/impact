@@ -10,6 +10,16 @@ data class LoginRequest(
     val password: String,
 )
 
+data class RefreshTokenRequest(
+    @field:NotBlank
+    val refreshToken: String
+)
+
 data class LoginResponse(
-    val token: String,
+    val accessToken: String,
+    val refreshToken: String,
+)
+
+data class TokenResponse(
+    val accessToken: String
 )
