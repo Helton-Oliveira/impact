@@ -15,12 +15,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfig {
+class SecurityConfig(private val customAuthenticationEntryPoint: CustomAuthenticationEntryPoint) {
 
     @Bean
     fun filterChain(http: HttpSecurity, jwtAuthenticationFilter: JwtAuthenticationFilter): SecurityFilterChain =
         http
             .csrf { it.disable() }
+            .exceptionHandling { handling ->
+                handling.authenticationEntryPoint(customAuthenticationEntryPoint)
+            }
             .sessionManagement { sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests { auth ->
                 auth
