@@ -44,9 +44,9 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="type_of_donation" type="text">
-                <constraints nullable="false"/>
-            </column>
+            <column name="allow_item_donation" type="boolean"/>
+
+            <column name="allow_money_donation" type="boolean"/>
 
             <column name="status" type="text">
                 <constraints nullable="false"/>
@@ -75,10 +75,6 @@
 
         <createIndex tableName="cam_campaigns" indexName="idx_cam_campaigns__name">
             <column name="name" type="text"/>
-        </createIndex>
-
-        <createIndex tableName="cam_campaigns" indexName="idx_cam_campaigns__type_of_donation">
-            <column name="type_of_donation" type="text"/>
         </createIndex>
 
         <createIndex tableName="cam_campaigns" indexName="idx_cam_campaigns__status">

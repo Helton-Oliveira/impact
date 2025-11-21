@@ -18,7 +18,8 @@ fun CampaignInput.toDomain(): Campaign =
             purpose = input.purpose;
             status = input.status;
             expirationTime = input.expirationTime;
-            typeOfDonation = input.typeOfDonation;
+            allowMoneyDonation = input.allowMoneyDonation;
+            allowItemDonation = input.allowItemDonation;
             user = input.user?.id?.let { userInputId -> User().apply { id = userInputId } }
             file = input.file?.id.let { fileInputId -> File().apply { id = fileInputId } }
         }.also { file ->
@@ -33,7 +34,8 @@ fun Campaign.toOutput(): CampaignOutput =
         purpose = this.purpose,
         status = this.status,
         expirationTime = this.expirationTime,
-        typeOfDonation = this.typeOfDonation,
+        allowMoneyDonation = this.allowMoneyDonation,
+        allowItemDonation = this.allowItemDonation,
         file = this.mapIfRequested(CampaignAssociations.FILE.propertyName) { this.file.toOutput() },
         user = this.mapIfRequested(CampaignAssociations.USER.propertyName) { this.user?.toOutput() }
     ).also {

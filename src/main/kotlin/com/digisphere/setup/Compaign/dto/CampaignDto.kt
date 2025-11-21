@@ -3,7 +3,6 @@ package com.digisphere.setup.Compaign.dto
 import com.digisphere.setup.config.root.BaseInput
 import com.digisphere.setup.config.root.BaseOutput
 import com.digisphere.setup.enumerations.Status
-import com.digisphere.setup.enumerations.TypeOfDonation
 import com.digisphere.setup.file.dto.FileInput
 import com.digisphere.setup.file.dto.FileOutput
 import com.digisphere.setup.user.dto.UserInput
@@ -30,7 +29,10 @@ data class CampaignInput(
     var expirationTime: Instant,
 
     @field:NotNull
-    var typeOfDonation: TypeOfDonation,
+    var allowMoneyDonation: Boolean,
+
+    @field:NotNull
+    var allowItemDonation: Boolean,
 
     @field:NotNull
     var file: FileInput?,
@@ -55,7 +57,10 @@ data class CampaignOutput(
     var expirationTime: Instant,
 
     @field:JsonView(Json.Detail::class)
-    var typeOfDonation: TypeOfDonation,
+    var allowMoneyDonation: Boolean,
+
+    @field:JsonView(Json.Detail::class)
+    var allowItemDonation: Boolean,
 
     @field:JsonView(Json.WithFile::class)
     var file: FileOutput?,

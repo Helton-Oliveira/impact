@@ -2,7 +2,6 @@ package com.digisphere.setup.Compaign.domain
 
 import com.digisphere.setup.config.root.BaseEntity
 import com.digisphere.setup.enumerations.Status
-import com.digisphere.setup.enumerations.TypeOfDonation
 import com.digisphere.setup.file.domain.File
 import com.digisphere.setup.user.domain.User
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
@@ -16,12 +15,11 @@ class Campaign : BaseEntity() {
     lateinit var name: String;
     lateinit var purpose: String;
     lateinit var expirationTime: Instant;
+    var allowMoneyDonation: Boolean = false;
+    var allowItemDonation: Boolean = false;
 
     @Enumerated(EnumType.STRING)
     lateinit var status: Status;
-
-    @Enumerated(EnumType.STRING)
-    lateinit var typeOfDonation: TypeOfDonation;
 
     @OneToOne(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
     @JoinColumn(name = "file_id", unique = true)
