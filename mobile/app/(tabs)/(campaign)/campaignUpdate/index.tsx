@@ -1,8 +1,31 @@
 import {SafeAreaView} from "react-native-safe-area-context";
-import {ScrollView, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {
+    ActivityIndicator,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
+} from "react-native";
 import ImageLoader from "@/components/imageLoader";
+import {_useCampaignUpdate} from "@/app/(tabs)/(campaign)/campaignUpdate/_useCampaignUpdate";
 
 export default function CampaignUpdate() {
+
+    const {
+        name,
+        purpose,
+        allowMoneyDonation,
+        allowItemDonation,
+        uriImage,
+        onSave,
+        dismiss,
+        canSubmit,
+        isPendingCreate,
+        isPendingUpdate,
+    } = _useCampaignUpdate();
 
     type FilterButtonProps = {
         label: string;
@@ -33,65 +56,92 @@ export default function CampaignUpdate() {
     }
 
     return (
-        <SafeAreaView className="flex-1 bg-background-primary items-center justify-center">
-            <ScrollView>
-                <View className="flex-1 bg-background-primary gap-5">
-                    <TextInput className="bg-background-secondary w-96 h-16 rounded-xl pl-5"
-                               placeholder="Titulo da Campanha..."
-                               placeholderTextColor="#7EE3D4"
-                    />
+        <SafeAreaView className="flex-1 bg-background-primary">
 
-                    <TextInput className="bg-background-secondary w-96 h-40 rounded-xl pl-5"
-                               placeholder="Descrição..."
-                               placeholderTextColor="#7EE3D4"
-                    />
+            {/* 2. Área ROLÁVEL e com Evitamento de Teclado (Ocupa o espaço restante) */}
+            <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                className="flex-1"
+            >
+                <ScrollView className="flex-1" contentContainerStyle={{paddingBottom: 20}}>
+                    {/* Conteúdo do Formulário (Centralizado) */}
+                    <View className="gap-5 items-center justify-center p-4">
 
-                    <ImageLoader
-                        onImageSelected={() => {
-                        }}
-                        textInput={"Carregar Imagem"}
-                        switchButtonText={""}
-                        actionField={"Carregar Imagem"}
-                    />
+                        <TextInput
+                            className="bg-background-secondary w-full max-w-sm h-16 rounded-xl pl-5 text-text-default"
+                            placeholder="Titulo da Campanha..."
+                            placeholderTextColor="#7EE3D4"
+                            value={name.value}
+                            onChangeText={name.setValue}
+                        />
 
-                    <View>
-                        <Text className="font-bold text-2xl text-text-default items-center p-4 right-4">
-                            Tipo de campanha
-                        </Text>
+                        <TextInput
+                            className="bg-background-secondary w-full max-w-sm h-40 rounded-xl pl-5 text-text-default"
+                            placeholder="Descrição..."
+                            placeholderTextColor="#7EE3D4"
+                            value={purpose.value}
+                            onChangeText={purpose.setValue}
+                            multiline
+                            textAlignVertical="top"
+                        />
 
-                        <View className="flex-row items-center w-80 gap-10">
-                            <FilterButton
-                                label="Money"
-                                isActive={true}
-                                onPress={() => {
-                                }}
+                        {/* Conteúdo dentro do ScrollView: ImageLoader e Tipos de Doação */}
+                        <View className="items-start w-full p-2 gap-2">
+
+                            <ImageLoader
+                                onImageSelected={uriImage.setValue}
+                                textInput={"Carregar Imagem"}
+                                switchButtonText={"Trocar Imagem"}
+                                actionField={"Carregar Imagem"}
                             />
 
-                            <FilterButton
-                                label="Items"
-                                isActive={true}
-                                onPress={() => {
-                                }}
-                            />
+                            <Text className="font-bold text-2xl text-text-default pt-5">
+                                Tipo de campanha
+                            </Text>
+
+                            <View className="flex-row w-full gap-5">
+                                <FilterButton
+                                    label="Money"
+                                    isActive={allowMoneyDonation.value}
+                                    onPress={() => allowMoneyDonation.setValue(!allowMoneyDonation.value)}
+                                />
+
+                                <FilterButton
+                                    label="Items"
+                                    isActive={allowItemDonation.value}
+                                    onPress={() => allowItemDonation.setValue(!allowItemDonation.value)}
+                                />
+                            </View>
                         </View>
                     </View>
-                </View>
-            </ScrollView>
 
-            <View className="flex-row mt-5 gap-20 mb-[-20]">
+                </ScrollView>
+            </KeyboardAvoidingView>
+
+            {/* 3. Área FIXA dos Botões (FORA do ScrollView) */}
+            <View className="flex-row p-4 justify-between bg-background-primary">
+
+                {/* Botão Cancelar */}
                 <TouchableOpacity
-                    className="w-32 h-14 bg-background-secondary rounded-xl justify-center items-center"
-                >
-                    <Text className="text-text-default text-xl font-bold">
-                        Cancelar
-                    </Text>
+                    className="flex-1 h-14 bg-background-secondary rounded-xl justify-center items-center mr-2"
+                    onPress={() => dismiss()}>
+                    <Text className="text-text-default text-xl font-bold">Cancelar</Text>
                 </TouchableOpacity>
 
+                {/* Botão Salvar Campanha */}
                 <TouchableOpacity
-                    className="w-48 h-14 bg-accent-primary rounded-xl justify-center items-center p-2">
-                    <Text className="text-text-default text-xl font-bold">
-                        Salvar Campanha
-                    </Text>
+                    className={`flex-1 h-14 rounded-xl justify-center items-center ml-2 
+                    ${canSubmit() ? "bg-accent-primary" : "bg-state-disabled"}`}
+                    disabled={!canSubmit()}
+                    onPress={onSave}>
+
+                    {(isPendingCreate || isPendingUpdate) ? (
+                        <ActivityIndicator className="color-text-default justify-center items-center" size="small"/>
+                    ) : (
+                        <Text className={
+                            ` text-2xl font-bold text-text-default
+                            ${!canSubmit() && "color-text-disabled"}`}>Salvar Campanha</Text>
+                    )}
                 </TouchableOpacity>
             </View>
 
