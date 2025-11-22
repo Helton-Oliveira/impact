@@ -24,17 +24,11 @@ export default function CreateAccount() {
         handleAvatarSelect,
         saveUser,
         isPending,
-        isSuccess,
-        isError,
-        error,
         isDisable
     } = useCreateAccount();
 
     return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            style={{flex: 1}}
-        >
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} className="flex-1">
             <View className="flex-1 bg-background-primary items-center p-[15px]">
                 <ScrollView className="flex-1 w-full">
                     <View className="pb-5 gap-5">

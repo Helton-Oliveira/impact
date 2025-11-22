@@ -5,7 +5,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import {CampaignCard} from "@/app/(tabs)/(campaign)/campaignList";
 
 export default function HomeScreen() {
-    const {campaigns, isLoadingCampaigns, isErrorCampaigns, isSuccessCampaigns, imageUri} = _useHome();
+    const {campaigns, imageUri, goCampaignList} = _useHome();
     return (
         <SafeAreaView className="flex-1 bg-background-primary p-8">
             <View className="w-[100%] h-[8%] flex-row justify-around items-center">
@@ -20,7 +20,7 @@ export default function HomeScreen() {
             <View>
                 <View className="top-10 flex-row justify-between items-center">
                     <Text className="font-bold text-text-default text-3xl">Novas Campanhas</Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={goCampaignList}>
                         <Text className=" text-text-secondary ">Ver mais...</Text>
                     </TouchableOpacity>
                 </View>
