@@ -1,10 +1,10 @@
-import _useCampaignQuery from "@/queries/campaign.query";
-import useFormBuilder from "@/components/formBuilderComponent";
-import Campaign from "@/src/campaign/campaign.model";
+import _useCampaignQuery from "@/shared/queries/campaign.query";
+import useFormBuilder from "@/shared/components/formBuilderComponent";
+import Campaign from "@/modules/campaign/campaign.model";
 import {v4 as uuidv4} from 'uuid';
-import {Status} from "@/src/enumerations/status";
-import AppFile from "@/src/file/file.mode";
-import {FileType} from "@/src/file/file.type.enum";
+import {Status} from "@/modules/enumerations/status";
+import AppFile from "@/modules/file/file.mode";
+import {FileType} from "@/modules/file/file.type.enum";
 import * as ImagePicker from "expo-image-picker";
 import {router, useLocalSearchParams} from "expo-router";
 import {useEffect, useRef} from "react";

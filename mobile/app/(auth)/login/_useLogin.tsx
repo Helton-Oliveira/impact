@@ -1,8 +1,8 @@
-import {LoginRequest} from "@/src/auth/dto/login.dto";
+import {LoginRequest} from "@/modules/auth/dto/login.dto";
 import {router} from "expo-router";
 import _useLoginQuery from "@/app/(auth)/login/_login.query";
-import useFormBuilder from "@/components/formBuilderComponent";
-import {getAccessToken, loadTokensFromStorage, setAccessToken, setRefreshToken} from "@/src/root/session.utils";
+import useFormBuilder from "@/shared/components/formBuilderComponent";
+import {getAccessToken, loadTokensFromStorage, setAccessToken, setRefreshToken} from "@/modules/root/session.utils";
 import {useEffect, useState} from "react";
 
 export default function _useLogin() {

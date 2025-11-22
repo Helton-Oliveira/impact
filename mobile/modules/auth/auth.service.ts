@@ -1,5 +1,5 @@
-import {LoginRequest, LoginResponse} from "@/src/auth/dto/login.dto";
-import api from "@/src/root/api";
+import {LoginRequest, LoginResponse} from "@/modules/auth/dto/login.dto";
+import api from "@/modules/root/api";
 
 type EntityResponseType = LoginResponse;
 

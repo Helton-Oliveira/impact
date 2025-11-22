@@ -1,6 +1,6 @@
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import CampaignService from "@/src/campaign/campaign.service";
-import Campaign from "@/src/campaign/campaign.model";
+import CampaignService from "@/modules/campaign/campaign.service";
+import Campaign from "@/modules/campaign/campaign.model";
 
 const service = new CampaignService();
 

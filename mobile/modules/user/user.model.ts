@@ -1,6 +1,6 @@
-import {BaseEntity} from "@/src/root/BaseEntity";
-import {Role} from "@/src/root/Role";
-import AppFile from "@/src/file/file.mode";
+import {BaseEntity} from "@/modules/root/BaseEntity";
+import {Role} from "@/modules/root/Role";
+import AppFile from "@/modules/file/file.mode";
 
 export default class User extends BaseEntity {
     public firstName?: string;

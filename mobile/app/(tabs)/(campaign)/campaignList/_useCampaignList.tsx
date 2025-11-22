@@ -1,5 +1,5 @@
-import _useCampaignQuery from "@/queries/campaign.query";
-import useFormBuilder from "@/components/formBuilderComponent";
+import _useCampaignQuery from "@/shared/queries/campaign.query";
+import useFormBuilder from "@/shared/components/formBuilderComponent";
 import {router} from "expo-router";
 
 export const _useCampaignList = () => {

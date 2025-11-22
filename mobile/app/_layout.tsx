@@ -1,8 +1,8 @@
 import {Stack} from "expo-router";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
-import ReactQueryDebugPanel from "@/components/reactQueryDeubgPainel";
 import "../styles/global.css";
-import {ThemeProvider} from "@/utils/themeProvider";
+import {ThemeProvider} from "@/shared/utils/themeProvider";
+import ReactQueryDebugPanel from "@/shared/components/reactQueryDeubgPainel";
 
 const queryClient = new QueryClient();
 

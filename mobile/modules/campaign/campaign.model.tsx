@@ -1,7 +1,7 @@
-import {BaseEntity} from "@/src/root/BaseEntity";
-import User from "@/src/user/user.model";
-import AppFile from "@/src/file/file.mode";
-import {Status} from "@/src/enumerations/status";
+import {BaseEntity} from "@/modules/root/BaseEntity";
+import User from "@/modules/user/user.model";
+import AppFile from "@/modules/file/file.mode";
+import {Status} from "@/modules/enumerations/status";
 
 export default class Campaign extends BaseEntity {
     public name?: string;

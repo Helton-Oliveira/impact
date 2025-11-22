@@ -1,5 +1,5 @@
-import User from "@/src/user/user.model";
-import api from "@/src/root/api";
+import User from "@/modules/user/user.model";
+import api from "@/modules/root/api";
 
 type EntityResponseType = User;
 type EntityArrayResponseType = User[];

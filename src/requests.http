@@ -59,7 +59,7 @@ Content-Type: application/json
 
 
 ### GET request to example server
-GET http://localhost:8080/api/users/36
+GET http://localhost:8080/api/users/40
 Authorization: Bearer {{jwtAccessToken}}
 
 ###
@@ -113,6 +113,12 @@ Content-Type: application/json
   "resetKey": "DJMLSPH3AM1JEJ4UI0HY",
   "resetKeyCreatedAt": "2025-11-03T22:16:43.269496Z"
 }
+
+###
+### GET request to example server
+GET http://localhost:8080/api/users/me
+Authorization: Bearer {{jwtAccessToken}}
+Content-Type: application/json
 
 ###
 

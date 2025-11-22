@@ -1,5 +1,5 @@
-import useFormBuilder from "@/components/formBuilderComponent";
-import _useUserQuery from "@/queries/user.query";
+import useFormBuilder from "@/shared/components/formBuilderComponent";
+import _useUserQuery from "@/shared/queries/user.query";
 import {router, useLocalSearchParams} from "expo-router";
 
 export default function _useResetPassword() {

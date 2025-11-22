@@ -1,8 +1,8 @@
 import {useMutation, useQuery} from "@tanstack/react-query";
-import AuthService from "@/src/auth/auth.service";
-import {LoginRequest} from "@/src/auth/dto/login.dto";
-import {getAccessToken, setAccessToken, setRefreshToken} from "@/src/root/session.utils";
-import UserService from "@/src/user/user.service";
+import AuthService from "@/modules/auth/auth.service";
+import {LoginRequest} from "@/modules/auth/dto/login.dto";
+import {getAccessToken, setAccessToken, setRefreshToken} from "@/modules/root/session.utils";
+import UserService from "@/modules/user/user.service";
 
 export default function _useLoginQuery() {
     const authService = new AuthService();

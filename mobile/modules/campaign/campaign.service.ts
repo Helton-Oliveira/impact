@@ -1,5 +1,5 @@
-import Campaign from "@/src/campaign/campaign.model";
-import api from "@/src/root/api";
+import Campaign from "@/modules/campaign/campaign.model";
+import api from "@/modules/root/api";
 
 type PageResponse<T> = {
     content: T[];

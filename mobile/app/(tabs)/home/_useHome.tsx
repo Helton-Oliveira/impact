@@ -1,4 +1,4 @@
-import _useCampaignQuery from "@/queries/campaign.query";
+import _useCampaignQuery from "@/shared/queries/campaign.query";
 import _useLoginQuery from "@/app/(auth)/login/_login.query";
 import {router} from "expo-router";
 

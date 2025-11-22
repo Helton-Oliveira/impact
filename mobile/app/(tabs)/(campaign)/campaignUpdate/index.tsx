@@ -9,7 +9,7 @@ import {
     TouchableOpacity,
     View
 } from "react-native";
-import ImageLoader from "@/components/imageLoader";
+import ImageLoader from "@/shared/components/imageLoader";
 import {_useCampaignUpdate} from "@/app/(tabs)/(campaign)/campaignUpdate/_useCampaignUpdate";
 
 export default function CampaignUpdate() {

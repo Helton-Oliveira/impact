@@ -1,7 +1,7 @@
 import {SafeAreaView} from "react-native-safe-area-context";
 import {ActivityIndicator, FlatList, Image, Text, TextInput, TouchableOpacity, View} from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import Campaign from "@/src/campaign/campaign.model";
+import Campaign from "@/modules/campaign/campaign.model";
 import {_useCampaignList} from "@/app/(tabs)/(campaign)/campaignList/_useCampaignList";
 
 export type CampaignCardProps = {
@@ -24,8 +24,6 @@ export const CampaignCard = ({item}: CampaignCardProps) => {
 
 export default function CampaignListScreen() {
     const {campaigns, isLoading, openCreateCampaignScreen} = _useCampaignList();
-
-    console.log(campaigns)
 
     if (isLoading) {
         return (

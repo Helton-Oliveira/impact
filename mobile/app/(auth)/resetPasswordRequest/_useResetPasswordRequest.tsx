@@ -1,5 +1,5 @@
-import useFormBuilder from "@/components/formBuilderComponent";
-import _useUserQuery from "@/queries/user.query";
+import useFormBuilder from "@/shared/components/formBuilderComponent";
+import _useUserQuery from "@/shared/queries/user.query";
 import {createURL} from "expo-linking";
 
 export default function _useResetPasswordRequest() {

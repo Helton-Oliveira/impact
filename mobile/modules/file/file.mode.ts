@@ -1,6 +1,6 @@
-import {FileType} from "@/src/file/file.type.enum";
-import User from "@/src/user/user.model";
-import {BaseEntity} from "@/src/root/BaseEntity";
+import {FileType} from "@/modules/file/file.type.enum";
+import User from "@/modules/user/user.model";
+import {BaseEntity} from "@/modules/root/BaseEntity";
 import {readAsStringAsync} from 'expo-file-system/legacy';
 
 export default class AppFile extends BaseEntity {

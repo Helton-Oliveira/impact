@@ -1,5 +1,5 @@
 import {Image, Text, TouchableOpacity, View} from "react-native";
-import _useImageLoader from "@/components/imageLoader/_useImageLoader";
+import _useImageLoader from "@/shared/components/imageLoader/_useImageLoader";
 import * as ImagePicker from 'expo-image-picker';
 
 interface ImageLoaderProps {
