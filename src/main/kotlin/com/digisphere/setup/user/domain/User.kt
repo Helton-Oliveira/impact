@@ -22,7 +22,7 @@ class User : BaseEntity() {
     lateinit var email: String;
     lateinit var phoneNumber: String;
     lateinit var role: Role;
-    lateinit var password: String;
+    var password: String? = null;
 
     var resetKey: String? = null;
     var resetKeyCreatedAt: Instant? = null;
