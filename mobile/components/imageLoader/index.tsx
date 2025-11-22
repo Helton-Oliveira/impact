@@ -13,7 +13,7 @@ export default function ImageLoader({onImageSelected, textInput, switchButtonTex
     const {handleImageSelection, selectedImage} = _useImageLoader(onImageSelected);
 
     return (
-        <View className="gap-[10px] items-start w-[360px]">
+        <View className="gap-[10px] items-start w-[360px] justify-center">
 
             <Text className="font-bold text-[18px] text-text-default">
                 {actionField}
@@ -28,10 +28,10 @@ export default function ImageLoader({onImageSelected, textInput, switchButtonTex
                     />
 
                     <TouchableOpacity
-                        className="bg-background-secondary py-[8px] px-[15px] rounded-[5px] items-center mt-[5px]"
+                        className="bg-background-secondary py-[8px] px-[15px] rounded-xl items-center mt-[5px]"
                         onPress={handleImageSelection}
                     >
-                        <Text className="text-background-secondary text-[16px] font-semibold">
+                        <Text className="text-text-default text-[16px] font-semibold">
                             {switchButtonText}
                         </Text>
                     </TouchableOpacity>
