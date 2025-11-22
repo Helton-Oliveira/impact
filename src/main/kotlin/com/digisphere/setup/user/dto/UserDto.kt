@@ -25,9 +25,7 @@ data class UserInput(
     @field:Length(max = 11)
     var cpf: String,
 
-    @field:NotBlank
-    @field:Length(min = 1, max = 255)
-    var password: String,
+    var password: String?,
 
     @field:NotBlank
     @field:Length(min = 1, max = 255)

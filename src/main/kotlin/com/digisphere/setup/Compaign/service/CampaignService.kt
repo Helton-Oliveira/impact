@@ -7,7 +7,8 @@ import com.digisphere.setup.Compaign.extensions.toDomain
 import com.digisphere.setup.Compaign.extensions.toOutput
 import com.digisphere.setup.Compaign.repository.CampaignRepository
 import com.digisphere.setup.config.root.extensions.applyFetches
-import com.digisphere.setup.file.service.FileService
+import com.digisphere.setup.file.extensions.toDomain
+import com.digisphere.setup.file.repository.FileRepository
 import jakarta.transaction.Transactional
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
@@ -17,18 +18,18 @@ import kotlin.jvm.optionals.getOrNull
 @Transactional
 class CampaignService(
     private val campaignRepository: CampaignRepository,
-    private val fileService: FileService,
+    private val fileRepository: FileRepository,
 ) {
 
     fun save(input: CampaignInput?): Result<CampaignOutput?> = runCatching {
-        val editedFile = input
-            ?.takeIf { it.file?._edited ?: false }
-            ?.also { it.file?.user = it.user }
-            ?.file
+        val file = input?.takeIf { it.file?._edited == true }
+            ?.file?.apply {
+                user = input.user
+            }?.toDomain()
+            ?.let(fileRepository::save)
 
         input?.toDomain()
-            ?.takeIf { it.wasEdited() && it.user?.id != null }
-            ?.also { fileService.saveFile(editedFile) }
+            ?.also { if (file != null) it.file = file }
             ?.let(campaignRepository::save)
             ?.toOutput()
     }
@@ -40,9 +41,12 @@ class CampaignService(
             ?.toOutput()
     }
 
-    fun getAll(pageable: Pageable) = runCatching {
+    fun getAll(pageable: Pageable, fetches: Set<CampaignAssociations> = emptySet()) = runCatching {
         campaignRepository.findAll(pageable)
-            .map { file -> file.toOutput() }
+            .map { campaign ->
+                campaign.also { if (fetches.isNotEmpty()) it.applyFetches(fetches) }
+                    .toOutput()
+            }
     }
 
     fun deleteById(id: Long) = runCatching {

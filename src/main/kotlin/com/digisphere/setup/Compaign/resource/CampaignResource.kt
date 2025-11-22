@@ -47,7 +47,7 @@ class CampaignResource(
     fun getAll(
         @PageableDefault(size = 10, sort = ["createdAt"], direction = Sort.Direction.DESC) pagination: Pageable
     ): ResponseEntity<*> =
-        campaignService.getAll(pagination)
+        campaignService.getAll(pagination, setOf(CampaignAssociations.FILE))
             .fold(
                 onFailure = { err ->
                     err.printStackTrace()

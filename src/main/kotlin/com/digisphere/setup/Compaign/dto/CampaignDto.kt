@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonView
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
+import java.time.Duration
 import java.time.Instant
 
 
@@ -25,8 +26,7 @@ data class CampaignInput(
     @field:NotNull
     var status: Status,
 
-    @field:NotNull
-    var expirationTime: Instant,
+    var expirationTime: Instant? = Instant.now().plus(Duration.ofDays(30)),
 
     @field:NotNull
     var allowMoneyDonation: Boolean,

@@ -6,7 +6,6 @@ import com.digisphere.setup.Compaign.dto.CampaignInput
 import com.digisphere.setup.Compaign.dto.CampaignOutput
 import com.digisphere.setup.config.root.extensions.getAuthenticatedUsername
 import com.digisphere.setup.config.root.extensions.mapIfRequested
-import com.digisphere.setup.file.domain.File
 import com.digisphere.setup.file.extensions.toOutput
 import com.digisphere.setup.user.domain.User
 import com.digisphere.setup.user.extensions.toOutput
@@ -17,11 +16,10 @@ fun CampaignInput.toDomain(): Campaign =
             name = input.name;
             purpose = input.purpose;
             status = input.status;
-            expirationTime = input.expirationTime;
+            expirationTime = input.expirationTime!!;
             allowMoneyDonation = input.allowMoneyDonation;
             allowItemDonation = input.allowItemDonation;
             user = input.user?.id?.let { userInputId -> User().apply { id = userInputId } }
-            file = input.file?.id.let { fileInputId -> File().apply { id = fileInputId } }
         }.also { file ->
             file.takeIf { it.wasEdited() }
                 ?.audit(getAuthenticatedUsername())
