@@ -1,5 +1,5 @@
 import {SafeAreaView} from "react-native-safe-area-context";
-import {FlatList, Image, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {ActivityIndicator, FlatList, Image, Text, TextInput, TouchableOpacity, View} from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Campaign from "@/src/campaign/campaign.model";
 import {_useCampaignList} from "@/app/(tabs)/(campaign)/campaignList/_useCampaignList";
@@ -10,40 +10,50 @@ export type CampaignCardProps = {
 
 export const CampaignCard = ({item}: CampaignCardProps) => {
     return (
-        <TouchableOpacity>
+        <TouchableOpacity className="flex-1 bg-background-secondary text-text-default rounded-xl">
             <Image
-                className="rounded-lg "
-                source={{uri: ""}}
+                className="rounded-lg w-full h-40"
+                resizeMode="cover"
+                source={{uri: `data:image/jpeg;base64,${item?.file?.base64}`}}
             />
-            <Text>{item.name}</Text>
-            <Text>{item.purpose}</Text>
+            <Text className="text-text-default">{item.name}</Text>
+            <Text className="text-text-default">{item.purpose}</Text>
         </TouchableOpacity>
     );
 }
 
 export default function CampaignListScreen() {
-    const {campaigns, openCreateCampaignScreen} = _useCampaignList();
+    const {campaigns, isLoading, openCreateCampaignScreen} = _useCampaignList();
+
+    console.log(campaigns)
+
+    if (isLoading) {
+        return (
+            <ActivityIndicator className="items-center justify-center" size={32}/>
+        )
+    }
 
     return (
-        <SafeAreaView className="flex-1 bg-background-primary p-10 ">
+        <SafeAreaView className="flex-1 bg-background-primary p-10 gap-14 ">
             <View
                 className="flex-row justify-between bg-background-secondary pr-10 pl-3 items-center rounded-xl w-[100%]">
                 <TouchableOpacity>
                     <Ionicons name="search" size={28} color="#91C9BF"/>
                 </TouchableOpacity>
-                <TextInput className=" text-text-default"/>
+                <TextInput className="flex-1 text-text-default"/>
             </View>
 
-            <View className="justify-center items-center gap-2">
-                <FlatList
-                    data={campaigns}
-                    renderItem={({item}) => <CampaignCard item={item}/>}/>
-            </View>
+            <FlatList
+                data={campaigns}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({item}) => <CampaignCard item={item}/>}
+                ListEmptyComponent={<Text className="text-text-default">Nenhuma campanha encontrada.</Text>}
+                contentContainerStyle={{gap: 8, paddingBottom: 16}}
+                className="flex-1 "
+            />
 
             <TouchableOpacity
-                onPress={() => {
-                    openCreateCampaignScreen();
-                }}
+                onPress={openCreateCampaignScreen}
                 className="absolute bottom-6 right-6 w-16 h-16 bg-teal-600 rounded-2xl items-center justify-center shadow-lg z-50"
             >
                 <Ionicons name="add" size={32} color="#FFFF"/>

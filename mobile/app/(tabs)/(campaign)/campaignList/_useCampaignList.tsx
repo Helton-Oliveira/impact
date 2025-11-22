@@ -16,10 +16,10 @@ export const _useCampaignList = () => {
     }
 
     return {
-        campaigns: getAll.data || [],
+        campaigns: getAll.data?.content,
         isLoading: getAll.isLoading,
         isError: getAll.isError,
         isSuccess: getAll.isSuccess,
-        openCreateCampaignScreen
+        openCreateCampaignScreen,
     }
 }
