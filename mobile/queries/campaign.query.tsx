@@ -24,7 +24,8 @@ export default function _useCampaignQuery() {
         mutationFn: (data: Campaign) => service.create(data),
         onSuccess: async () => {
             await queryClient.invalidateQueries({queryKey: ["campaigns"]});
-        }
+        },
+        onError: error => console.log("Erro na Atualização:", error)
     });
 
     const update = useMutation({

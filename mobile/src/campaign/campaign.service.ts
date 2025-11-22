@@ -1,34 +1,43 @@
-import axios from "axios";
 import Campaign from "@/src/campaign/campaign.model";
+import api from "@/src/root/api";
+
+type PageResponse<T> = {
+    content: T[];
+    page: {
+        number: number;
+        size: number;
+        totalElements: number;
+        totalPages: number;
+    };
+};
 
 type EntityResponseType = Campaign;
-type EntityArrayResponseType = Campaign[];
+type EntityArrayResponseType = PageResponse<Campaign[]>;
 
 export default class CampaignService {
-    private readonly BASE_URL: string = "http://192.168.15.99:8080/api/campaigns";
 
     async create(campaign: Campaign): Promise<EntityResponseType> {
-        return axios.post(`${this.BASE_URL}`, campaign)
+        return api.post(`/campaigns`, campaign)
             .then(res => res.data);
     }
 
     async findAll(): Promise<EntityArrayResponseType> {
-        return axios.get(`${this.BASE_URL}`)
+        return api.get(`/campaigns`)
             .then(res => res.data);
     }
 
     async finById(id: number): Promise<EntityResponseType> {
-        return axios.get(`${this.BASE_URL}/${id}`)
+        return api.get(`/campaigns`)
             .then(res => res.data);
     }
 
     async update(campaign: Campaign): Promise<EntityResponseType> {
-        return axios.put(`${this.BASE_URL}`, campaign)
+        return api.put(`/campaigns`, campaign)
             .then(res => res.data);
     }
 
     async delete(id: number): Promise<EntityResponseType> {
-        return axios.delete(`${this.BASE_URL}/${id}`)
+        return api.delete(`/campaigns`)
             .then(res => res.data);
     }
 }
