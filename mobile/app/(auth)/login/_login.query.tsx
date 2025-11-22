@@ -27,9 +27,20 @@ export default function _useLoginQuery() {
         });
     };
 
+    const getNewAccessToken = useMutation({
+        mutationFn: (refreshToken: string) => authService.getNewAccessToken(refreshToken),
+        onSuccess: async (data) => {
+            if (data.accessToken) {
+                await setAccessToken(data.accessToken);
+            }
+        },
+        onError: (err) => console.log(err)
+    });
+
     return {
         executeLogin,
-        getCurrentUser
+        getCurrentUser,
+        getNewAccessToken
     }
 
 }
