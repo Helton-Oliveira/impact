@@ -1,18 +1,9 @@
 import Campaign from "@/modules/campaign/campaign.model";
 import api from "@/modules/root/api";
-
-type PageResponse<T> = {
-    content: T[];
-    page: {
-        number: number;
-        size: number;
-        totalElements: number;
-        totalPages: number;
-    };
-};
+import {Page} from "@/shared/api.response";
 
 type EntityResponseType = Campaign;
-type EntityArrayResponseType = PageResponse<Campaign[]>;
+type EntityArrayResponseType = Page<Campaign>;
 
 export default class CampaignService {
 
@@ -21,8 +12,15 @@ export default class CampaignService {
             .then(res => res.data);
     }
 
-    async findAll(): Promise<EntityArrayResponseType> {
-        return api.get(`/campaigns`)
+    async findAll(pageParam: number, size: number): Promise<EntityArrayResponseType> {
+        const config = {
+            params: {
+                page: pageParam,
+                size: size,
+                sort: "id,desc"
+            }
+        };
+        return api.get<EntityArrayResponseType>(`/campaigns`, config)
             .then(res => res.data);
     }
 

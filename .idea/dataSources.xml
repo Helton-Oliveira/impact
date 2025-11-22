@@ -45,7 +45,7 @@
       <jdbc-url>jdbc:postgresql://localhost:5432/impact</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="jdbc:postgresql://localhost:5432/impact [DEBUG]" group="​SetupApplication" uuid="96055131-5aeb-405c-ad3e-548ce34c10ce">
+    <data-source source="LOCAL" name="jdbc:postgresql://localhost:5432/impact [DEBUG]" group="​SetupApplication" uuid="8e990ab8-8755-48c6-823c-257eeea0e3b5">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>

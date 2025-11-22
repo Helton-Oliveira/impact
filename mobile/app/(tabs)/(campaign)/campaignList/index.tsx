@@ -10,7 +10,7 @@ export type CampaignCardProps = {
 
 export const CampaignCard = ({item}: CampaignCardProps) => {
     return (
-        <TouchableOpacity className="flex-1 bg-background-secondary text-text-default rounded-xl">
+        <TouchableOpacity className="flex-1 bg-background-secondary text-text-default rounded-xl  w-80">
             <Image
                 className="rounded-lg w-full h-40"
                 resizeMode="cover"
@@ -32,7 +32,7 @@ export default function CampaignListScreen() {
     }
 
     return (
-        <SafeAreaView className="flex-1 bg-background-primary p-10 gap-14 ">
+        <SafeAreaView className="flex-1 bg-background-primary p-10 gap-14 justify-center">
             <View
                 className="flex-row justify-between bg-background-secondary pr-10 pl-3 items-center rounded-xl w-[100%]">
                 <TouchableOpacity>
@@ -43,11 +43,11 @@ export default function CampaignListScreen() {
 
             <FlatList
                 data={campaigns}
-                keyExtractor={(item, index) => index.toString()}
+                keyExtractor={(item, index) => item?.id?.toString() ?? index.toString()}
                 renderItem={({item}) => <CampaignCard item={item}/>}
                 ListEmptyComponent={<Text className="text-text-default">Nenhuma campanha encontrada.</Text>}
                 contentContainerStyle={{gap: 8, paddingBottom: 16}}
-                className="flex-1 "
+                className="flex-1 w-full"
             />
 
             <TouchableOpacity

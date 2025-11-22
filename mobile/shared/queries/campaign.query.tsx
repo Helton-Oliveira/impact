@@ -1,4 +1,4 @@
-import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
+import {useInfiniteQuery, useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import CampaignService from "@/modules/campaign/campaign.service";
 import Campaign from "@/modules/campaign/campaign.model";
 
@@ -6,10 +6,15 @@ const service = new CampaignService();
 
 export default function _useCampaignQuery() {
     const queryClient = useQueryClient();
+    const ITEMS_PER_PAGE = 10;
 
-    const getAll = useQuery({
+    const getAll = useInfiniteQuery({
         queryKey: ["campaigns"],
-        queryFn: () => service.findAll(),
+        initialPageParam: 0,
+        getNextPageParam: () => {
+            return 1
+        },
+        queryFn: ({pageParam}) => service.findAll(pageParam, ITEMS_PER_PAGE),
     });
 
     const getById = (id: number, options?: { enabled: boolean }) => {

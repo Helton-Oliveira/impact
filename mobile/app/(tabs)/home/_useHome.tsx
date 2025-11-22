@@ -1,6 +1,7 @@
 import _useCampaignQuery from "@/shared/queries/campaign.query";
 import _useLoginQuery from "@/app/(auth)/login/_login.query";
 import {router} from "expo-router";
+import {useMemo} from "react";
 
 export const _useHome = () => {
     const {getCurrentUser} = _useLoginQuery()
@@ -12,10 +13,14 @@ export const _useHome = () => {
         router.replace("/campaignList");
     }
 
+    const campaigns = useMemo(() => {
+        return getAll.data?.pages.flatMap((page) => page?.content);
+    }, [getAll.data])
+
     const imageUri = user?.files?.[0]?.path || `data:image/jpeg;base64,${user?.files?.[0]?.base64}`;
 
     return {
-        campaigns: getAll.data || [],
+        campaigns,
         isLoadingCampaigns: getAll.isLoading,
         isErrorCampaigns: getAll.isError,
         isSuccessCampaigns: getAll.isSuccess,
